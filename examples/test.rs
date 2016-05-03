@@ -1,5 +1,5 @@
 extern crate vulkan;
-use vulkan as vk;
+use vulkan::vk;
 use vulkan::spock::*;
 use std::ffi::CString;
 
