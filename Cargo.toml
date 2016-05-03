@@ -1,0 +1,8 @@
+[package]
+name = "vulkan"
+version = "0.1.0"
+authors = ["Nathan Holland <nholland94@gmail.com>"]
+build = "build.rs"
+
+[dependencies]
+libc = { version = "0.2", default-features = false }
