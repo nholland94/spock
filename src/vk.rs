@@ -58,7 +58,8 @@ const VK_MAX_EXTENSION_NAME_SIZE: usize = 256;
 const VK_MAX_DESCRIPTION_SIZE: usize = 256;
 
 #[repr(C)]
-pub enum Result {
+#[derive(Copy, Clone)]
+pub enum Error {
     Success = 0,
     NotReady = 1,
     Timeout = 2,
@@ -84,43 +85,44 @@ pub enum Result {
     ErrorValidationFailedExt = -1_000_011_001
 }
 
-impl ToString for Result {
+impl ToString for Error {
     fn to_string(&self) -> String {
         match *self {
-            Result::Success                     => "Success".to_string(),
-            Result::NotReady                    => "Not Ready".to_string(),
-            Result::Timeout                     => "Timeout".to_string(),
-            Result::EventSet                    => "Event Set".to_string(),
-            Result::EventReset                  => "Event Reset".to_string(),
-            Result::Incomplete                  => "Incomplete".to_string(),
-            Result::SuboptimalKHR               => "Suboptimal KHR".to_string(),
-            Result::ErrorOutOfHostMemory        => "Error (Out of Host Memory".to_string(),
-            Result::ErrorOutOfDeviceMemory      => "Error (Out of Device Memory)".to_string(),
-            Result::ErrorInitializationFailed   => "Error (Intialization Failed)".to_string(),
-            Result::ErrorDeviceLost             => "Error (Device Lost)".to_string(),
-            Result::ErrorMemoryMapFailed        => "Error (Memory Map Failed)".to_string(),
-            Result::ErrorLayerNotPresent        => "Error (Layer Not Present)".to_string(),
-            Result::ErrorExtensionNotPresent    => "Error (Extension Not Present)".to_string(),
-            Result::ErrorFeatureNotPresent      => "Error (Feature Not Present)".to_string(),
-            Result::ErrorIncompatibleDriver     => "Error (Incompatible Driver)".to_string(),
-            Result::ErrorTooManyObjects         => "Error (Too Many Objects)".to_string(),
-            Result::ErrorFormatNotSupported     => "Error (Format Not Supported)".to_string(),
-            Result::ErrorSurfaceLostKHR         => "Error (Surface Lost KHR)".to_string(),
-            Result::ErrorNativeWindowInUseKHR   => "Error (Native Window in Use KHR)".to_string(),
-            Result::ErrorOutOfDateKHR           => "Error (Out of Date KHR)".to_string(),
-            Result::ErrorIncompatibleDisplayKHR => "Error (Incompaitble Display KHR)".to_string(),
-            Result::ErrorValidationFailedExt    => "Error (Validation Vailed Ext)".to_string()
+            Error::Success                     => "Success".to_string(),
+            Error::NotReady                    => "Not Ready".to_string(),
+            Error::Timeout                     => "Timeout".to_string(),
+            Error::EventSet                    => "Event Set".to_string(),
+            Error::EventReset                  => "Event Reset".to_string(),
+            Error::Incomplete                  => "Incomplete".to_string(),
+            Error::SuboptimalKHR               => "Suboptimal KHR".to_string(),
+            Error::ErrorOutOfHostMemory        => "Error (Out of Host Memory".to_string(),
+            Error::ErrorOutOfDeviceMemory      => "Error (Out of Device Memory)".to_string(),
+            Error::ErrorInitializationFailed   => "Error (Intialization Failed)".to_string(),
+            Error::ErrorDeviceLost             => "Error (Device Lost)".to_string(),
+            Error::ErrorMemoryMapFailed        => "Error (Memory Map Failed)".to_string(),
+            Error::ErrorLayerNotPresent        => "Error (Layer Not Present)".to_string(),
+            Error::ErrorExtensionNotPresent    => "Error (Extension Not Present)".to_string(),
+            Error::ErrorFeatureNotPresent      => "Error (Feature Not Present)".to_string(),
+            Error::ErrorIncompatibleDriver     => "Error (Incompatible Driver)".to_string(),
+            Error::ErrorTooManyObjects         => "Error (Too Many Objects)".to_string(),
+            Error::ErrorFormatNotSupported     => "Error (Format Not Supported)".to_string(),
+            Error::ErrorSurfaceLostKHR         => "Error (Surface Lost KHR)".to_string(),
+            Error::ErrorNativeWindowInUseKHR   => "Error (Native Window in Use KHR)".to_string(),
+            Error::ErrorOutOfDateKHR           => "Error (Out of Date KHR)".to_string(),
+            Error::ErrorIncompatibleDisplayKHR => "Error (Incompaitble Display KHR)".to_string(),
+            Error::ErrorValidationFailedExt    => "Error (Validation Vailed Ext)".to_string()
         }
     }
 }
 
-impl fmt::Debug for Result {
+impl fmt::Debug for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.to_string())
     }
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum StructureType {
     ApplicationInfo = 0,
     InstanceCreateInfo = 1,
@@ -186,6 +188,7 @@ pub enum StructureType {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum SystemAllocationScope {
     Command = 0,
     Object = 1,
@@ -195,12 +198,14 @@ pub enum SystemAllocationScope {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum InternalAllocationType {
     Executable = 0,
     Dummy = 1 // Dummy workaround for E0083
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum Format {
     Undefined = 0,
     R4G4UnormPacks = 1,
@@ -390,6 +395,7 @@ pub enum Format {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum ImageType {
     Type1D = 0,
     Type2D = 1,
@@ -397,12 +403,14 @@ pub enum ImageType {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum ImageTiling {
     Optimal = 0,
     Linear = 1
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum PhysicalDeviceType {
     Other = 0,
     IntegratedGPU = 1,
@@ -412,6 +420,7 @@ pub enum PhysicalDeviceType {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum QueryType {
     Occlusion = 0,
     PipelineStatistics = 1,
@@ -419,12 +428,14 @@ pub enum QueryType {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum SharingMode {
     Exclusive = 0,
     Concurrent = 1
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum ImageLayout {
     Undefined = 0,
     General = 1,
@@ -439,6 +450,7 @@ pub enum ImageLayout {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum ImageViewType {
     Type1D = 0,
     Type2D = 1,
@@ -450,6 +462,7 @@ pub enum ImageViewType {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum ComponentSwizzle {
     Identity = 0,
     Zero = 1,
@@ -461,12 +474,14 @@ pub enum ComponentSwizzle {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum VertexInputRate {
     Vertex = 0,
     Instance = 1
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum PrimitiveTopology {
     PointList = 0,
     LineList = 1,
@@ -482,6 +497,7 @@ pub enum PrimitiveTopology {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum PolygonMode {
     Fill = 0,
     Line = 1,
@@ -489,12 +505,14 @@ pub enum PolygonMode {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum FrontFace {
     CounterClockwise = 0,
     Clockwise = 1
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum CompareOp {
     Never = 0,
     Less = 1,
@@ -507,6 +525,7 @@ pub enum CompareOp {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum StencilOp {
     Keep = 0,
     Zero = 1,
@@ -519,6 +538,7 @@ pub enum StencilOp {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum LogicOp {
     Clear = 0,
     And = 1,
@@ -539,6 +559,7 @@ pub enum LogicOp {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum BlendFactor {
     Zero = 0,
     One = 1,
@@ -562,6 +583,7 @@ pub enum BlendFactor {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum BlendOp {
     Add = 0,
     Subtract = 1,
@@ -571,6 +593,7 @@ pub enum BlendOp {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum DynamicState {
     Viewport = 0,
     Scissor = 1,
@@ -584,18 +607,21 @@ pub enum DynamicState {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum Filter {
     Nearest = 0,
     Linear = 1
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum SamplerMipmapMode {
     Nearest = 0,
     Linear = 1
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum SamplerAddressMode {
     Repeat = 0,
     MirroredRepeat = 1,
@@ -605,6 +631,7 @@ pub enum SamplerAddressMode {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum BorderColor {
     FloatTransparentBlack = 0,
     IntTransparentBlack = 1,
@@ -615,6 +642,7 @@ pub enum BorderColor {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum DescriptorType {
     Sampler = 0,
     CombinedImageSampler = 1,
@@ -630,6 +658,7 @@ pub enum DescriptorType {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum AttachmentLoadOp {
     Load = 0,
     Clear = 1,
@@ -637,37 +666,44 @@ pub enum AttachmentLoadOp {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum AttachmentStoreOp {
     Store = 0,
     DontCare = 1
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum PipelineBindPoint {
     Graphics = 0,
     Compute = 1
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum CommandBufferLevel {
     Primary = 0,
     Secondary = 1
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum IndexType {
     Uint16 = 0,
     Uint32 = 1
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum SubpassContents {
     Inline = 0,
     SecondaryCommandBuffers = 1
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum FormatFeatureFlags {
+    None = 0x00000000,
     SampledImage = 0x00000001,
     StorageImage = 0x00000002,
     StorageImageAtomic = 0x00000004,
@@ -684,7 +720,9 @@ pub enum FormatFeatureFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum ImageCreateFlags {
+    None = 0x00,
     SparseBinding = 0x01,
     SparseResidency = 0x02,
     SparseAliased = 0x04,
@@ -693,7 +731,9 @@ pub enum ImageCreateFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum ImageUsageFlags {
+    None = 0x00,
     TransferSrc = 0x01,
     TransferDst = 0x02,
     Sampled = 0x04,
@@ -705,7 +745,9 @@ pub enum ImageUsageFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum SampleCountFlags {
+    Count0 = 0x00,
     Count1 = 0x01,
     Count2 = 0x02,
     Count4 = 0x04,
@@ -726,7 +768,7 @@ pub enum QueueFlags {
 }
 
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Copy, Clone)]
 pub enum MemoryPropertyFlags {
     None = 0x00,
     DeviceLocal = 0x01,
@@ -737,14 +779,16 @@ pub enum MemoryPropertyFlags {
 }
 
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Copy, Clone)]
 pub enum MemoryHeapFlags {
     None = 0x00,
     DeviceLocal = 0x01
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum PipelineStageFlags {
+    None = 0x00000000,
     TopOfPipe = 0x00000001,
     DrawIndirect = 0x00000002,
     VertexInput = 0x00000004,
@@ -765,7 +809,9 @@ pub enum PipelineStageFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum ImageAspectFlags {
+    None = 0x00,
     Color = 0x01,
     Depth = 0x02,
     Stencil = 0x04,
@@ -773,26 +819,32 @@ pub enum ImageAspectFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum SparseImageFormatFlags {
+    None = 0x00,
     SingleMiptail = 0x01,
     AlignedMipSize = 0x02,
     NonstandardBlockSize = 0x04
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum SparseMemoryBindFlags {
     None = 0x00,
     BindMetadata = 0x01
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum FenceCreateFlags {
     None = 0x00,
     Signaled = 0x01
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum QueryPipelineStatisticFlags {
+    None = 0x0000,
     InputAssemblyVertices = 0x0001,
     InputAssemblyPrimitives = 0x0002,
     VertexShaderInvocations = 0x0004,
@@ -807,14 +859,15 @@ pub enum QueryPipelineStatisticFlags {
 }
 
 #[repr(C)]
-pub enum QueryResultFlags {
-    Result64 = 0x01,
-    ResultWait = 0x02,
-    ResultWithAvailability = 0x04,
-    ResultPartial = 0x08
+pub enum QueryErrorFlags {
+    Error64 = 0x01,
+    ErrorWait = 0x02,
+    ErrorWithAvailability = 0x04,
+    ErrorPartial = 0x08
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum BufferCreateFlags {
     SparseBinding = 0x01,
     SparseResidency = 0x02,
@@ -822,7 +875,9 @@ pub enum BufferCreateFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum BufferUsageFlags {
+    None = 0x0000,
     TransferSrc = 0x0001,
     TransferDst = 0x0002,
     UniformTexelBuffer = 0x0004,
@@ -835,6 +890,7 @@ pub enum BufferUsageFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum PipelineCreateFlags {
     DisableOptimization = 0x01,
     AllowDerivatives = 0x02,
@@ -842,7 +898,9 @@ pub enum PipelineCreateFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum ShaderStageFlags {
+    None = 0x00,
     Vertex = 0x01,
     TessellationControl = 0x02,
     TessellationEvaluation = 0x04,
@@ -854,6 +912,7 @@ pub enum ShaderStageFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum CullModeFlags {
     None = 0x00,
     Front = 0x01,
@@ -862,7 +921,9 @@ pub enum CullModeFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum ColorComponentFlags {
+    None = 0x00,
     R = 0x01,
     G = 0x02,
     B = 0x04,
@@ -870,19 +931,23 @@ pub enum ColorComponentFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum DescriptorPoolCreateFlags {
     None = 0x00,
     FreeDescriptorSet = 0x01
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum AttachmentDescriptionFlags {
     None = 0x00,
     MayAlias = 0x01
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum AccessFlags {
+    None = 0x00000000,
     IndirectCommandRead = 0x00000001,
     IndexRead = 0x00000002,
     VertexAttributeRead = 0x00000004,
@@ -903,24 +968,28 @@ pub enum AccessFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum DependencyFlags {
     None = 0x00,
     ByRegion = 0x01
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum CommandPoolCreateFlags {
     Transient = 0x01,
     ResetCommandBuffer = 0x02
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum CommandPoolResetFlags {
     None = 0x00,
     ResetReleaseResources = 0x01
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum CommandBufferUsageFlags {
     OneTimeSubmit = 0x01,
     RenderPassContinue = 0x02,
@@ -928,18 +997,21 @@ pub enum CommandBufferUsageFlags {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum QueryControlFlags {
     None = 0x00,
     Precise = 0x01
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum CommandBufferResetFlags {
     None = 0x00,
     ResetReleaseResources = 0x01
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub enum StencilFaceFlags {
     Front = 0x01,
     Back = 0x02,
@@ -990,7 +1062,7 @@ pub type DescriptorSetLayoutCreateFlags = Flags;
 // }
 // 
 // impl fmt::Debug for *const c_char {
-//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Error {
 //         let mut 
 //         let c: c_char
 // 
@@ -1006,6 +1078,7 @@ pub type DescriptorSetLayoutCreateFlags = Flags;
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ApplicationInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1031,7 +1104,7 @@ impl Default for ApplicationInfo {
 }
 
 // impl fmt::Debug for ApplicationInfo {
-//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Error {
 //         write!(
 //             f,
 //             r#"
@@ -1055,6 +1128,7 @@ impl Default for ApplicationInfo {
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct InstanceCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1083,7 +1157,7 @@ impl Default for InstanceCreateInfo {
 
 // TODO: code generate this.
 // impl fmt::Debug for InstanceCreateInfo {
-//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Error {
 //         write!(
 //             f,
 //             r#"
@@ -1104,6 +1178,7 @@ impl Default for InstanceCreateInfo {
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct AllocationCallbacks {
     pub pUserData: *mut c_void,
     pub pfnAllocation: AllocationFunction,
@@ -1113,8 +1188,22 @@ pub struct AllocationCallbacks {
     pub pfnInternalFree: InternalFreeNotificationFunction
 }
 
+impl Default for AllocationCallbacks {
+    fn default() -> AllocationCallbacks {
+        AllocationCallbacks {
+            pUserData: ptr::null_mut(),
+            pfnAllocation: ptr::null(),
+            pfnReallocation: ptr::null(),
+            pfnFree: ptr::null(),
+            pfnInternalAllocation: ptr::null(),
+            pfnInternalFree: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PhysicalDeviceFeatures {
     pub robustBufferAccess: Bool32,
     pub fullDrawIndexUint32: Bool32,
@@ -1173,12 +1262,85 @@ pub struct PhysicalDeviceFeatures {
     pub inheritedQueries: Bool32
 }
 
+impl Default for PhysicalDeviceFeatures {
+    fn default() -> PhysicalDeviceFeatures {
+        PhysicalDeviceFeatures {
+            robustBufferAccess: 0,
+            fullDrawIndexUint32: 0,
+            imageCubeArray: 0,
+            independentBlend: 0,
+            geometryShader: 0,
+            tessellationShader: 0,
+            sampleRateShading: 0,
+            dualSrcBlend: 0,
+            logicOp: 0,
+            multiDrawIndirect: 0,
+            drawIndirectFirstInstance: 0,
+            depthClamp: 0,
+            depthBiasClamp: 0,
+            fillModeNonSolid: 0,
+            depthBounds: 0,
+            wideLines: 0,
+            largePoints: 0,
+            alphaToOne: 0,
+            multiViewport: 0,
+            samplerAnisotropy: 0,
+            textureCompressionETC2: 0,
+            textureCompressionASTC_LDR: 0,
+            textureCompressionBC: 0,
+            occlusionQueryPrecise: 0,
+            pipelineStatisticsQuery: 0,
+            vertexPipelineStoresAndAtomics: 0,
+            fragmentStoresAndAtomics: 0,
+            shaderTessellationAndGeometryPointSize: 0,
+            shaderImageGatherExtended: 0,
+            shaderStorageImageExtendedFormats: 0,
+            shaderStorageImageMultisample: 0,
+            shaderStorageImageReadWithoutFormat: 0,
+            shaderStorageImageWriteWithoutFormat: 0,
+            shaderUniformBufferArrayDynamicIndexing: 0,
+            shaderSampledImageArrayDynamicIndexing: 0,
+            shaderStorageBufferArrayDynamicIndexing: 0,
+            shaderStorageImageArrayDynamicIndexing: 0,
+            shaderClipDistance: 0,
+            shaderCullDistance: 0,
+            shaderFloat64: 0,
+            shaderInt64: 0,
+            shaderInt16: 0,
+            shaderResourceResidency: 0,
+            shaderResourceMinLod: 0,
+            sparseBinding: 0,
+            sparseResidencyBuffer: 0,
+            sparseResidencyImage2D: 0,
+            sparseResidencyImage3D: 0,
+            sparseResidency2Samples: 0,
+            sparseResidency4Samples: 0,
+            sparseResidency8Samples: 0,
+            sparseResidency16Samples: 0,
+            sparseResidencyAliased: 0,
+            variableMultisampleRate: 0,
+            inheritedQueries: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct FormatProperties {
     pub linearTilingFeatures: FormatFeatureFlags,
-    pub optimalTilintFeatures: FormatFeatureFlags,
+    pub optimalTilingFeatures: FormatFeatureFlags,
     pub bufferFeatures: FormatFeatureFlags
+}
+
+impl Default for FormatProperties {
+    fn default() -> FormatProperties {
+        FormatProperties {
+            linearTilingFeatures: None,
+            optimalTilingFeatures: None,
+            bufferFeatures: None
+        }
+    }
 }
 
 #[repr(C)]
@@ -1202,6 +1364,7 @@ impl Default for Extent3D {
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ImageFormatProperties {
     pub maxExtent: Extent3D,
     pub maxMipLevels: uint32_t,
@@ -1210,8 +1373,21 @@ pub struct ImageFormatProperties {
     pub maxResourceSize: DeviceSize
 }
 
+impl Default for ImageFormatProperties {
+    fn default() -> ImageFormatProperties {
+        ImageFormatProperties {
+            maxExtent: Extent2D{..Default::default()},
+            maxMipLevels: 0,
+            maxArrayLayers: 0,
+            sampleCounts: SampleCountFlags::Count0,
+            maxResourceSize: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PhysicalDeviceLimits {
     pub maxImageDimension1D: uint32_t,
     pub maxImageDimension2D: uint32_t,
@@ -1321,8 +1497,122 @@ pub struct PhysicalDeviceLimits {
     pub nonCoherentAtomSize: DeviceSize
 }
 
+impl Default for PhysicalDeviceLimits {
+    fn default() -> PhysicalDeviceLimits {
+        PhysicalDeviceLimits {
+            maxImageDimension1D: 0,
+            maxImageDimension2D: 0,
+            maxImageDimension3D: 0,
+            maxImageDimensionCube: 0,
+            maxImageArrayLayers: 0,
+            maxTexelBufferElements: 0,
+            maxUniformBufferRange: 0,
+            maxStorageBufferRange: 0,
+            maxPushConstantsSize: 0,
+            maxMemoryAllocationCount: 0,
+            maxSamplerAllocationCount: 0,
+            bufferImageGranularity: 0,
+            sparseAddressSpaceSize: 0,
+            maxBoundDescriptorSets: 0,
+            maxPerStageDescriptorSamplers: 0,
+            maxPerStageDescriptorUniformBuffers: 0,
+            maxPerStageDescriptorStorageBuffers: 0,
+            maxPerStageDescriptorSampledImages: 0,
+            maxPerStageDescriptorStorageImages: 0,
+            maxPerStageDescriptorInputAttachments: 0,
+            maxPerStageResources: 0,
+            maxDescriptorSetSamplers: 0,
+            maxDescriptorSetUniformBuffers: 0,
+            maxDescriptorSetUniformBuffersDynamic: 0,
+            maxDescriptorSetStorageBuffers: 0,
+            maxDescriptorSetStorageBuffersDynamic: 0,
+            maxDescriptorSetSampledImages: 0,
+            maxDescriptorSetStorageImages: 0,
+            maxDescriptorSetInputAttachments: 0,
+            maxVertexInputAttributes: 0,
+            maxVertexInputBindings: 0,
+            maxVertexInputAttributeOffset: 0,
+            maxVertexInputBindingStride: 0,
+            maxVertexOutputComponents: 0,
+            maxTessellationGenerationLevel: 0,
+            maxTessellationPatchSize: 0,
+            maxTessellationControlPerVertexInputComponents: 0,
+            maxTessellationControlPerVertexOutputComponents: 0,
+            maxTessellationControlPerPatchOutputComponents: 0,
+            maxTessellationControlTotalOutputComponents: 0,
+            maxTessellationEvaluationInputComponents: 0,
+            maxTessellationEvaluationOutputComponents: 0,
+            maxGeometryShaderInvocations: 0,
+            maxGeometryInputComponents: 0,
+            maxGeometryOutputComponents: 0,
+            maxGeometryOutputVertices: 0,
+            maxGeometryTotalOutputComponents: 0,
+            maxFragmentInputComponents: 0,
+            maxFragmentOutputAttachments: 0,
+            maxFragmentDualSrcAttachments: 0,
+            maxFragmentCombinedOutputResources: 0,
+            maxComputeSharedMemorySize: 0,
+            maxComputeWorkGroupCount: [0; 3],
+            maxComputeWorkGroupInvocations: 0,
+            maxComputeWorkGroupSize: [0; 3],
+            subPixelPrecisionBits: 0,
+            subTexelPrecisionBits: 0,
+            mipmapPrecisionBits: 0,
+            maxDrawIndexedIndexValue: 0,
+            maxDrawIndirectCount: 0,
+            maxSamplerLodBias: 0.0,
+            maxSamplerAnisotropy: 0.0,
+            maxViewports: 0,
+            maxViewportDimensions: [0; 2],
+            viewportBoundsRange: [0.0; 2],
+            viewportSubPixelBits: 0,
+            minMemoryMapAlignment: 0,
+            minTexelBufferOffsetAlignment: 0,
+            minUniformBufferOffsetAlignment: 0,
+            minStorageBufferOffsetAlignment: 0,
+            minTexelOffset: 0,
+            maxTexelOffset: 0,
+            minTexelGatherOffset: 0,
+            maxTexelGatherOffset: 0,
+            minInterpolationOffset: 0.0,
+            maxInterpolationOffset: 0.0,
+            subPixelInterpolationOffsetBits: 0,
+            maxFramebufferWidth: 0,
+            maxFramebufferHeight: 0,
+            maxFramebufferLayers: 0,
+            framebufferColorSampleCounts: SampleCountFlags::Count0,
+            framebufferDepthSampleCounts: SampleCountFlags::Count0,
+            framebufferStencilSampleCounts: SampleCountFlags::Count0,
+            framebufferNoAttachmentsSampleCounts: SampleCountFlags::Count0,
+            maxColorAttachments: 0,
+            sampledImageColorSampleCounts: SampleCountFlags::Count0,
+            sampledImageIntegerSampleCounts: SampleCountFlags::Count0,
+            sampledImageDepthSampleCounts: SampleCountFlags::Count0,
+            sampledImageStencilSampleCounts: SampleCountFlags::Count0,
+            storageImageSampleCounts: SampleCountFlags::Count0,
+            maxSampleMaskWords: 0,
+            timestampComputeAndGraphics: Bool32::False,
+            timestampPeriod: 0.0,
+            maxClipDistances: 0,
+            maxCullDistances: 0,
+            maxCombinedClipAndCullDistances: 0,
+            discreteQueuePriorities: 0,
+            pointSizeRange: [0.0; 2],
+            lineWidthRange: [0.0; 2],
+            pointSizeGranularity: 0.0,
+            lineWidthGranularity: 0.0,
+            strictLines: Bool32,
+            standardSampleLocations: Bool32::False,
+            optimalBufferCopyOffsetAlignment: 0,
+            optimalBufferCopyRowPitchAlignment: 0,
+            nonCoherentAtomSize: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PhysicalDeviceSparseProperties {
     pub residencyStandard2DBlockShape: Bool32,
     pub residencyStandard2DMultisampleBlockShape: Bool32,
@@ -1331,8 +1621,21 @@ pub struct PhysicalDeviceSparseProperties {
     pub residencyNonResidentStrict: Bool32
 }
 
+impl Default for PhysicalDeviceSparseProperties {
+    fn default() -> PhysicalDeviceSparseProperties {
+        PhysicalDeviceSparseProperties {
+            residencyStandard2DBlockShape: Bool32::False,
+            residencySTandard2DMultisampleBlockShape: Bool32::False,
+            residencyStandard3DBlockShape: Bool32::False,
+            residencyAlignedMipSize: Bool32::False,
+            residencyNonResidentStrict: Bool32::False
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PhysicalDeviceProperties {
     pub apiVersion: uint32_t,
     pub driverVersion: uint32_t,
@@ -1343,6 +1646,22 @@ pub struct PhysicalDeviceProperties {
     pub pipelineCacheUUID: [uint8_t; VK_UUID_SIZE],
     pub limits: PhysicalDeviceLimits,
     pub sparseProperties: PhysicalDeviceSparseProperties
+}
+
+impl Default for PhysicalDeviceProperties {
+    fn default() -> PhysicalDeviceProperties {
+        PhysicalDeviceProperties {
+            apiVersion: 0,
+            driverVersion: 0,
+            vendorID: 0,
+            deviceID: 0,
+            deviceType: PhysicalDeviceType::Other,
+            deviceName: [0; VK_MAX_PHYSICAL_DEVICE_NAME_SIZE],
+            pipelineCacheUUID: [0; VK_UUID_SIZE],
+            limits: PhysicalDeviceLimits{..Default::default()},
+            sparseProperties: PhysicalDeviceSparseProperties{..Default::default()})
+        }
+    }
 }
 
 #[repr(C)]
@@ -1402,6 +1721,7 @@ impl Default for MemoryHeap {
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PhysicalDeviceMemoryProperties {
     pub memoryTypeCount: uint32_t,
     pub memoryTypes: [MemoryType; VK_MAX_MEMORY_TYPES],
@@ -1422,6 +1742,7 @@ impl Default for PhysicalDeviceMemoryProperties {
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DeviceQueueCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1446,6 +1767,7 @@ impl Default for DeviceQueueCreateInfo {
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DeviceCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1474,13 +1796,24 @@ impl Default for DeviceCreateInfo {
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ExtensionProperties {
     pub extensionName: [c_char; VK_MAX_EXTENSION_NAME_SIZE],
     pub specVersion: uint32_t
 }
 
+impl Default for ExtensionProperties {
+    fn default() -> ExtensionProperties {
+        ExtensionProperties {
+            extensionName: [0; VK_MAX_EXTENSION_NAME_SIZE],
+            specVersion: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct LayerProperties {
     pub layerName: [c_char; VK_MAX_EXTENSION_NAME_SIZE],
     pub specVersion: uint32_t,
@@ -1488,8 +1821,20 @@ pub struct LayerProperties {
     pub description: [c_char; VK_MAX_DESCRIPTION_SIZE]
 }
 
+impl Default for LayerProperties {
+    fn default() -> LayerProperties {
+        LayerProperties {
+            layerName: [0; VK_MAX_EXTENSION_NAME_SIZE],
+            specVersion: 0,
+            implementationVersion: 0,
+            description: [0; VK_MAX_DESCRIPTION_SIZE]
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SubmitInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1502,8 +1847,25 @@ pub struct SubmitInfo {
     pub pSignalSemaphores: *const Semaphore
 }
 
+impl Default for SubmitInfo {
+    fn default() -> SubmitInfo {
+        SubmitInfo {
+            sType: StructureType::SubmitInfo,
+            pNext: ptr::null(),
+            waitSemaphoreCount: 0,
+            pWaitSemaphores: ptr::null(),
+            pWaitDstStageMask: ptr::null(),
+            commandBufferCount: 0,
+            pCommandBuffers: ptr::null(),
+            signalSemaphoreCount: 0,
+            pSignalSemaphores: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct MemoryAllocateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1511,8 +1873,20 @@ pub struct MemoryAllocateInfo {
     pub memoryTypeIndex: uint32_t
 }
 
+impl Default for MemoryAllocateInfo {
+    fn default() -> MemoryAllocateInfo {
+        MemoryAllocateInfo {
+            sType: StructureType::MemoryAllocateInfo,
+            pNext: ptr::null(),
+            allocationSize: 0,
+            memoryTypeInde: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct MappedMemoryRange {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1521,24 +1895,59 @@ pub struct MappedMemoryRange {
     pub size: DeviceSize
 }
 
+impl Default for MappedMemoryRange {
+    fn default() -> MappedMemoryRange {
+        MappedMemoryRange {
+            sType: StructureType::MappedMemoryRange,
+            pNext: ptr::null(),
+            memory: ptr::null_mut(),
+            offset: 0,
+            size: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct MemoryRequirements {
     pub size: DeviceSize,
     pub alignment: DeviceSize,
     pub memoryTypeBits: uint32_t
 }
 
+impl Default for MemoryRequirements {
+    fn default() -> MemoryRequirements {
+        MemoryRequirements {
+            size: 0,
+            alignment: 0,
+            memoryTypeBits: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SparseImageFormatProperties {
     pub aspectMask: ImageAspectFlags,
     pub imageGranularity: Extent3D,
     pub flags: SparseImageFormatFlags
 }
 
+impl Default for SparseImageFormatProperties {
+    fn default() -> SparseImageFormatProperties {
+        SparseImageFormatProperties {
+            aspectMask: ImageAspectFlags::None,
+            imageGranularity: Extent3D{..Default::default()},
+            flags: SparseImageFormatFlags::None
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SparseImageMemoryRequirements {
     pub formatProperties: SparseImageFormatProperties,
     pub imageMipTailFirstLod: uint32_t,
@@ -1547,8 +1956,21 @@ pub struct SparseImageMemoryRequirements {
     pub imageMipTailStride: DeviceSize
 }
 
+impl Default for SparseImageMemoryRequirements {
+    fn default() -> SparseImageMemoryRequirements {
+        SparseImageMemoryRequirements {
+            formatProperties: SparseImageFormatProperties::None,
+            imageMipTailFirstLod: 0,
+            imageMipTailSize: 0,
+            imageMipTailOffset: 0,
+            imageMipTailStride: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SparseMemoryBind {
     pub resourceOffset: DeviceSize,
     pub size: DeviceSize,
@@ -1557,40 +1979,97 @@ pub struct SparseMemoryBind {
     pub flags: SparseMemoryBindFlags
 }
 
+impl Default for SparseMemoryBind {
+    fn default() -> SparseMemoryBind {
+        SparseMemoryBind {
+            resourceOffset: 0,
+            size: 0,
+            memory: ptr::null_mut(),
+            memoryOffset: 0,
+            flags: SparseMemoryBindFlags::None
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SparseBufferMemoryBindInfo {
     pub buffer: Buffer,
     pub bindCount: uint32_t,
     pub pBinds: *const SparseMemoryBind
 }
 
+impl Default for SparseBufferMemoryBindInfo {
+    fn default() -> SparseBufferMemoryBindInfo {
+        SparseBufferMemoryBindInfo {
+            buffer: ptr::null_mut(),
+            bindCount: 0,
+            pBinds: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SparseImageOpaqueMemoryBindInfo {
     pub image: Image,
     pub bindCount: uint32_t,
     pub pBinds: *const SparseMemoryBind
 }
 
+impl Default for SparseImageOpaqueMemoryBindInfo {
+    fn default() -> SparseImageOpaqueMemoryBindInfo {
+        SparseImageOpaqueMemoryBindInfo {
+            image: ptr::null_mut(),
+            bindCount: 0,
+            pBinds: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ImageSubresource {
     pub aspectMask: ImageAspectFlags,
     pub mipLevel: uint32_t,
     pub arrayLayer: uint32_t
 }
 
+impl Default for ImageSubresource {
+    fn default() -> ImageSubresource {
+        ImageSubresource {
+            aspectMask: ImageAspectFlags::None,
+            mipLevel: 0,
+            arrayLayer: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct Offset3D {
     pub x: int32_t,
     pub y: int32_t,
     pub z: int32_t
 }
 
+impl Default for Offset3D {
+    fn default() -> Offset3D {
+        Offset3D {
+            x: 0,
+            y: 0,
+            z: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SparseImageMemoryBind {
     pub subresource: ImageSubresource,
     pub offset: Offset3D,
@@ -1600,20 +2079,45 @@ pub struct SparseImageMemoryBind {
     pub flags: SparseMemoryBindFlags
 }
 
+impl Default for SparseImageMemoryBind {
+    fn default() -> SparseImageMemoryBind {
+        SparseImageMemoryBind {
+            subresource: ImageSubresource{..Default::default()},
+            offset: Offset3D{..Default::default()},
+            extent: Offset3D{..Default::default()},
+            memory: 0,
+            memoryOffset: 0,
+            flags: SparseMemoryBindFlags::None
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SparseImageMemoryBindInfo {
     pub image: Image,
     pub bindCount: uint32_t,
     pub pBinds: *const SparseImageMemoryBind
 }
 
+impl Default for SparseImageMemoryBindInfo {
+    fn default() -> SparseImageMemoryBindInfo {
+        SparseImageMemoryBindInfo {
+            image: ptr::null_mut(),
+            bindCount: 0,
+            pBinds: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct BindSparseInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
-    pub watiSemaphoreCount: uint32_t,
+    pub waitSemaphoreCount: uint32_t,
     pub pWaitSemaphores: *const Semaphore,
     pub bufferBindCount: uint32_t,
     pub pBufferBinds: *const SparseBufferMemoryBindInfo,
@@ -1625,32 +2129,85 @@ pub struct BindSparseInfo {
     pub pSignalSemaphores: *const Semaphore
 }
 
+impl Default for BindSparseInfo {
+    fn default() -> BindSparseInfo {
+        BindSparseInfo {
+            sType: StructureType::BindSparseInfo,
+            pNext: ptr::null(),
+            waitSemaphoreCount: 0,
+            pWaitSemaphore: ptr::null(),
+            bufferBindCount: 0,
+            pBufferBinds: ptr::null(),
+            imageOpaqueBindCount: 0,
+            pImageOpaqueBinds: ptr::null(),
+            imageBindCount: 0,
+            pImageBinds: ptr::null(),
+            signalSemaphoreCount: 0,
+            pSignalSemaphores: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct FenceCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
     pub flags: FenceCreateFlags
 }
 
+impl Default for FenceCreateInfo {
+    fn default() -> FenceCreateInfo {
+        FenceCreateInfo {
+            sType: StructureType::FenceCreateInfo,
+            pNext: ptr::null(),
+            flags: FenceCreateFlags::None
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SemaphoreCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
     pub flags: SemaphoreCreateFlags
 }
 
+impl Default for SemaphoreCreateInfo {
+    fn default() -> SemaphoreCreateInfo {
+        SemaphoreCreateInfo {
+            sType: StructureType::SemaphoreCreateInfo,
+            pNext: ptr::null(),
+            flags: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct EventCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
     pub flags: EventCreateFlags
 }
 
+impl Default for EventCreateInfo {
+    fn default() -> EventCreateInfo {
+        EventCreateInfo {
+            sType: StructureType::EventCreateInfo,
+            pNext: ptr::null(),
+            flags: EventCreateFlags::None
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct QueryPoolCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1660,8 +2217,22 @@ pub struct QueryPoolCreateInfo {
     pub pipelineStatistics: QueryPipelineStatisticFlags
 }
 
+impl Default for QueryPoolCreateInfo {
+    fn default() -> QueryPoolCreateInfo {
+        QueryPoolCreateInfo {
+            sType: StructureType::QueryPoolCreateInfo,
+            pNext: ptr::null(),
+            flags: QueryPoolCreateFlags::None,
+            queryType: QueryType::Occlusion,
+            queryCount: 0,
+            pipelineStatistics: QueryPipelineStatisticsFlags::None
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct BufferCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1673,8 +2244,24 @@ pub struct BufferCreateInfo {
     pub pQueueFamilyIndices: *const uint32_t
 }
 
+impl Default for BufferCreateInfo {
+    fn default() -> BufferCreateInfo {
+        BufferCreateInfo {
+            sType: StructureType::BufferCreateInfo,
+            pNext: ptr::null(),
+            flags: BufferCreateFlags::None,
+            size: 0,
+            usage: BufferUsageFlags::None,
+            sharingMode: SharingMode::Exclusive,
+            queueFamilyIndexCount: 0,
+            pQueueFamilyIndices: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct BufferViewCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1685,8 +2272,23 @@ pub struct BufferViewCreateInfo {
     pub range: DeviceSize
 }
 
+impl Default for BufferViewCreateInfo {
+    fn default() -> BufferViewCreateInfo {
+        BufferViewCreateInfo {
+            sType: StructureType::BufferViewCreateInfo,
+            pNext: ptr::null(),
+            flags: BufferViewCreateFlags::None,
+            buffer: ptr::null_mut(),
+            format: ptr::null_mut(),
+            offset: 0,
+            range: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ImageCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1705,8 +2307,31 @@ pub struct ImageCreateInfo {
     pub initialLayout: ImageLayout
 }
 
+impl Default for ImageCreateInfo {
+    fn default() -> ImageCreateInfo {
+        ImageCreateInfo {
+            sType: StructureType::ImageCreateInfo,
+            pNext: ptr::null(),
+            flags: ImageCreateFlags::None,
+            imageType: ImageType::Type1D,
+            format: ptr::null_mut(),
+            extent: Extent3D{..Default::default()},
+            mipLevels: 0,
+            arrayLayers: 0,
+            samples: SampleCountFlags::Count0,
+            tiling: ImageTiling::Optimal,
+            usage: ImageUsageFlags::None,
+            sharingMode: SharingMode::Exclusive,
+            queueFamilyIndexCount: 0,
+            pQueueFamilyIndices: ptr::null(),
+            initialLayout: ImageLayout::Undefined
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SubresourceLayout {
     pub offset: DeviceSize,
     pub size: DeviceSize,
@@ -1715,8 +2340,21 @@ pub struct SubresourceLayout {
     pub depthPitch: DeviceSize
 }
 
+impl Default for SubresourceLayout {
+    fn default() -> SubresourceLayout {
+        SubresourceLayout {
+            offset: 0,
+            size: 0,
+            rowPitch: 0,
+            arrayPitch: 0,
+            depthPitch: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ComponentMapping {
     pub r: ComponentSwizzle,
     pub g: ComponentSwizzle,
@@ -1724,8 +2362,20 @@ pub struct ComponentMapping {
     pub a: ComponentSwizzle
 }
 
+impl Default for ComponentMapping {
+    fn default() -> ComponentMapping {
+        ComponentMapping {
+            r: Identity,
+            g: Identity,
+            b: Identity,
+            a: Identity
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ImageSubresourceRange {
     pub aspectMask: ImageAspectFlags,
     pub baseMipLevel: uint32_t,
@@ -1734,8 +2384,21 @@ pub struct ImageSubresourceRange {
     pub layerCount: uint32_t
 }
 
+impl Default for ImageSubresourceRange {
+    fn default() -> ImageSubresourceRange {
+        ImageSubresourceRange {
+            aspectMask: ImageAspectFlags::None,
+            baseMipLevel: 0,
+            levelCount: 0,
+            baseArrayLayer: 0,
+            layerCount: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ImageViewCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1747,8 +2410,24 @@ pub struct ImageViewCreateInfo {
     pub subresourceRange: ImageSubresourceRange
 }
 
+impl Default for ImageViewCreateInfo {
+    fn default() -> ImageViewCreateInfo {
+        ImageViewCreateInfo {
+            sType: StructureType::ImageViewCreateInfo,
+            pNext: ptr::null(),
+            flags: ImageViewCreateFlags::None,
+            image: ptr::null_mut(),
+            viewType: ImageViewType::Type1D,
+            format: ptr::null_mut(),
+            components: ComponentMapping{..Default::default()},
+            subresourceRange: ImageSubresourceRange{..Default::default()}
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ShaderModuleCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1757,8 +2436,21 @@ pub struct ShaderModuleCreateInfo {
     pub pCode: *const uint32_t
 }
 
+impl Default for ShaderModuleCreateInfo {
+    fn default() -> ShaderModuleCreateInfo {
+        ShaderModuleCreateInfo {
+            sType: StructureType::ShaderModuleCreateInfo,
+            pNext: ptr::null(),
+            flags: ShaderModuleCreateFlags::None,
+            codeSize: 0,
+            pCode: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineCacheCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1767,16 +2459,40 @@ pub struct PipelineCacheCreateInfo {
     pub pInitialData: *const c_void
 }
 
+impl Default for PipelineCacheCreateInfo {
+    fn default() -> PipelineCacheCreateInfo {
+        PipelineCacheCreateInfo {
+            sType: StructureType::PipelineCacheCreateInfo,
+            pNext: ptr::null(),
+            flags: PipelineCacheCreateFlags::None,
+            initialDataSize: 0,
+            pInitialData: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SpecializationMapEntry {
     pub constantID: uint32_t,
     pub offset: uint32_t,
     pub size: size_t
 }
 
+impl Default for SpecializationMapEntry {
+    fn default() -> SpecializationMapEntry {
+        SpecializationMapEntry {
+            constantID: 0,
+            offset: 0,
+            size: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SpecializationInfo {
     pub mapEntryCount: uint32_t,
     pub pMapEntries: *const SpecializationMapEntry,
@@ -1784,8 +2500,20 @@ pub struct SpecializationInfo {
     pub pData: *const c_void
 }
 
+impl Default for SpecializationInfo {
+    fn default() -> SpecializationInfo {
+        SpecializationInfo {
+            mapEntryCount: 0,
+            pMapEntries: ptr::null(),
+            dataSize: 0,
+            pData: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineShaderStageCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1796,16 +2524,42 @@ pub struct PipelineShaderStageCreateInfo {
     pub pSpecializationInfo: *const SpecializationInfo
 }
 
-#[repr(C)]
-#[allow(non_snake_case)]
-pub struct VertexInputBindingDescription {
-    pub binding: uint32_t,
-    pub strid: uint32_t,
-    pub inputRate: VertexInputRate
+impl Default for PipelineShaderStageCreateInfo {
+    fn default() -> PipelineShaderStageCreateInfo {
+        PipelineShaderStageCreateInfo {
+            sType: StructureType::PipelineShaderStageCreateInfo,
+            pNext: ptr::null(),
+            flags: PipelineShaderStageCreateFlags::None,
+            stage: ShaderStageFlags::None,
+            module: ptr::null_mut(),
+            pName: ptr::null(),
+            pSpecializationInfo: ptr::null()
+        }
+    }
 }
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
+pub struct VertexInputBindingDescription {
+    pub binding: uint32_t,
+    pub stride: uint32_t,
+    pub inputRate: VertexInputRate
+}
+
+impl Default for VertexInputBindingDescription {
+    fn default() -> VertexInputBindingDescription {
+        VertexInputBindingDescription {
+            binding: 0,
+            stride: 0,
+            inputRate: VertexInputRate::Vertex
+        }
+    }
+}
+
+#[repr(C)]
+#[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct VertexInputAttributeDescription {
     pub location: uint32_t,
     pub binding: uint32_t,
@@ -1813,8 +2567,20 @@ pub struct VertexInputAttributeDescription {
     pub offset: uint32_t,
 }
 
+impl Default for VertexInputAttributeDescription {
+    fn default() -> VertexInputAttributeDescription {
+        VertexInputAttributeDescription {
+            location: 0,
+            binding: 0,
+            format: Format::Undefined,
+            offset: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineVertexInputStateCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1825,8 +2591,23 @@ pub struct PipelineVertexInputStateCreateInfo {
     pub pVertexAttributeDescriptions: *const VertexInputAttributeDescription
 }
 
+impl Default for PipelineVertexInputStateCreateInfo {
+    fn default() -> PipelineVertexInputStateCreateInfo {
+        PipelineVertexInputStateCreateInfo {
+            sType: StructureType::PipelineVertexInputStateCreateInfo,
+            pNext: ptr::null(),
+            flags: PipelineVertexInputStateCreateFlags::None,
+            vertexBindingDescriptionCount: 0,
+            pVertexBindingDescriptions: ptr::null(),
+            vertexAttributeDescriptionCount: 0,
+            pVertexAttributeDescriptions: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineInputAssemblyStateCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1835,8 +2616,21 @@ pub struct PipelineInputAssemblyStateCreateInfo {
     pub primitiveRestartEnable: Bool32
 }
 
+impl Default for PipelineInputAssemblyStateCreateInfo {
+    fn default() -> PipelineInputAssemblyStateCreateInfo {
+        PipelineInputAssemblyStateCreateInfo {
+            sType: StructureType::None,
+            pNext: ptr::null(),
+            flags: PipelineInputAssemblyStateCreateFlags::Null,
+            topology: PrimitiveTopology::PointList,
+            primitiveRestartEnable: Bool32::False
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineTessellationStateCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1844,40 +2638,96 @@ pub struct PipelineTessellationStateCreateInfo {
     pub patchControlPoints: uint32_t
 }
 
-#[repr(C)]
-#[allow(non_snake_case)]
-pub struct Viewport {
-    pub x: c_float,
-    pub y: c_float,
-    pub width: c_float,
-    pub hiehgt: c_float,
-    pub minDepth: c_float,
-    pub maxDepth: c_float
+impl Default for PipelineTesselationStateCreateInfo {
+    fn default() -> PipelineTesselationStateCreateInfo {
+        PipelineTesselationStateCreateInfo {
+            sType: StructureType::None,
+            pNext: ptr::null(),
+            flags: PippelineTesselationStateCreateFlags::None,
+            patchControlPoints: 0
+        }
+    }
 }
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
+pub struct Viewport {
+    pub x: c_float,
+    pub y: c_float,
+    pub width: c_float,
+    pub height: c_float,
+    pub minDepth: c_float,
+    pub maxDepth: c_float
+}
+
+impl Default for Viewport {
+    fn default() -> Viewport {
+        Viewport {
+            x: 0.0,
+            y: 0.0,
+            width: 0.0,
+            height: 0.0,
+            minDepth: 0.0,
+            maxDepth: 0.0
+        }
+    }
+}
+
+#[repr(C)]
+#[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct Offset2D {
     pub x: int32_t,
     pub y: int32_t
 }
 
+impl Default for Offset2D {
+    fn default -> Offset2D {
+        Offset2D {
+            x: 0,
+            y: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct Extent2D {
     pub width: uint32_t,
     pub height: uint32_t
 }
 
+impl Default for Extent2D {
+    fn default -> Extent2D {
+        Extent2D {
+            width: 0,
+            height: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct Rect2D {
     pub offset: Offset2D,
     pub extent: Extent2D
 }
 
+impl Default for Rect2D {
+    fn default -> Rect2D {
+        Rect2D {
+            offset: Offset2D{..Default::default()},
+            extent: Extent2D{..Default::default()}
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineViewportStateCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1888,8 +2738,23 @@ pub struct PipelineViewportStateCreateInfo {
     pub pScissors: *const Rect2D
 }
 
+impl Default for PipelineViewportStateCreateInfo {
+    fn default -> PipelineViewportStateCreateInfo {
+        PipelineViewportStateCreateInfo {
+            sType: StructureType::PipelineViewportStateCreateInfo,
+            pNext: ptr::null(),
+            flags: PipelineViewportStateCreateFlags::None,
+            viewportCount: 0,
+            pViewports: ptr::null(),
+            scissorCount: 0,
+            pScissors: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineRasterizationStateCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1899,29 +2764,67 @@ pub struct PipelineRasterizationStateCreateInfo {
     pub polygonMode: PolygonMode,
     pub cullMode: CullModeFlags,
     pub frontFace: FrontFace,
-    pub depthViasEanbel: Bool32,
+    pub depthBiasEnable: Bool32,
     pub depthBiasConstantFactor: c_float,
     pub depthBiasClamp: c_float,
     pub depthSlopeFactor: c_float,
     pub lineWidth: c_float
 }
 
+impl Default for PipelineRasterizationStateCreateInfo {
+    fn default -> PipelineRasterizationStateCreateInfo {
+        PipelineRasterizationStateCreateInfo {
+            sType: StructureType::PipelineRasterizationStateCreateInfo,
+            pNext: ptr::null(),
+            flags: PipelineRasterizationStateCreateFlags::None,
+            depthClampEnable: Bool32::False,
+            rasterizerDiscordEnable: Bool32::False,
+            polygonMode: PolygonMode::Fill,
+            cullMode: CullModeFlags::None,
+            frontFace: FrontFace::CounterClockwise,
+            depthBiasEnable: Bool32::False,
+            depthBiasConstantFactor: 0.0,
+            depthBiasClampL 0.0,
+            depthSlopeFactor: 0.0,
+            lineWidth: 0.0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineMultisampleStateCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
     pub flags: PipelineMultisampleStateCreateFlags,
     pub rasterizationSamples: SampleCountFlags,
-    pub sampleShadingEanble: Bool32,
+    pub sampleShadingEnable: Bool32,
     pub minSampleShading: c_float,
     pub pSampleMask: *const SampleMask,
     pub alphaToCoverageEnable: Bool32,
     pub alphaToOneEnable: Bool32
 }
 
+impl Default for PipelineMultisampleStateCreateInfo {
+    fn default -> PipelineMultisampleStateCreateInfo {
+        PipelineMultisampleStateCreateInfo {
+            sType: StructureType::PipelineMultisampleStateCreateInfo,
+            pNext: ptr::null(),
+            flags: PipelineMultisampleStateCreateFlags::None,
+            rasterizationSamples: SampleCountFlags::Count0,
+            sampleShadingEnable: Bool32::False,
+            minSampleShading: 0.0,
+            pSampleMask: ptr::null(),
+            alphaToCoverageEnable: Bool32::False,
+            alphaToOneEnable: Bool32::False
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct StencilOpState {
     pub failOp: StencilOp,
     pub passOp: StencilOp,
@@ -1932,8 +2835,23 @@ pub struct StencilOpState {
     pub reference: uint32_t
 }
 
+impl Default for StencilOpState {
+    fn default -> StencilOpState {
+        StencilOpState {
+            failOp: StencilOp::Keep,
+            passOp: StencilOp::Keep,
+            depthFailOp: StencilOp::Keep,
+            copmareOp: StencilOp::Keep,
+            compareMask: 0,
+            writeMask: 0,
+            reference: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineDepthStencilStateCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1949,8 +2867,28 @@ pub struct PipelineDepthStencilStateCreateInfo {
     pub maxDepthBounds: c_float
 }
 
+impl Default for PipelineDepthStencilStateCreateInfo {
+    fn default -> PipelineDepthStencilStateCreateInfo {
+        PipelineDepthStencilStateCreateInfo {
+            sType: StructureType::PipelineDepthStencilStateCreateInfo,
+            pNext: ptr::null(),
+            flags: PipelineDepthStencilStateCreateFlags::None,
+            depthTestsEnable: Bool32::False,
+            depthWriteEnable: Bool32::False,
+            depthCompareOp: CompareOp::Never,
+            depthBoundsTestEnable: Bool32::False,
+            stencilTestEnable: Bool32::False,
+            front: StencilOpState{..Default::default()},
+            back: StenilcOpState{..Default::default()},
+            minDepthBounds: 0.0,
+            maxDepthBounds: 0.0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineColorBlendAttachmentState {
     pub blendEnable: Bool32,
     pub srcColorBlendFactor: BlendFactor,
@@ -1962,8 +2900,24 @@ pub struct PipelineColorBlendAttachmentState {
     pub colorWriteMask: ColorComponentFlags
 }
 
+impl Default for PipelineColorBlendAttachmentState {
+    fn default -> PipelineColorBlendAttachmentState {
+        PipelineColorBlendAttachmentState {
+            blendEnable: Bool32::False,
+            srcColorBlendFactor: BlendFactor::Zero,
+            dstColorBlendFactor: BlendFactor::Zero,
+            colorBlendOp: BlendOp::Add,
+            srcAlphaBlendFactor: BlendFactor::Zero,
+            dstAlphaBlendFactor: BlendFactor::Zero,
+            alphaBlendOp: BlendOp::Add,
+            colorWriteMask: ColorComponentFlags::None
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineColorBlendStateCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1975,8 +2929,24 @@ pub struct PipelineColorBlendStateCreateInfo {
     pub blendConstants: [c_float; 4]
 }
 
+impl Default for PipelineColorBlendStateCreateInfo {
+    fn default -> PipelineColorBlendStateCreateInfo {
+        PipelineColorBlendStateCreateInfo {
+            sType: StructureType::PipelineColorBlendStateCreateInfo,
+            pNext: ptr::null(),
+            flags: PipelineColorBlendStateCreateFlags::None,
+            logicOpEnable: Bool32::False,
+            logicOp: LogicOp::Clear,
+            attachmentCount: 0,
+            pAttachments: ptr::null(),
+            blendConstants: [0.0; 4]
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineDynamicStateCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -1985,8 +2955,21 @@ pub struct PipelineDynamicStateCreateInfo {
     pub pDynamicStates: *const DynamicState
 }
 
+impl Default for PipelineDynamicStateCreateInfo {
+    fn default -> PipelineDynamicStateCreateInfo {
+        PipelineDynamicStateCreateInfo {
+            sType: StructureType::PipelineDynamicStateCreateInfo,
+            pNext: ptr::null(),
+            flags: PipelineDynamicStateCreateFlags::None,
+            dynamicStateCount: 0,
+            pDynamicStates: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct GraphicsPipelineCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2009,8 +2992,35 @@ pub struct GraphicsPipelineCreateInfo {
     pub basePipelineIndex: int32_t
 }
 
+impl Default for GraphicsPipelineCreateInfo {
+    fn default -> GraphicsPipelineCreateInfo {
+        GraphicsPipelineCreateInfo {
+            sType: StructureType::GraphicsPipelineCreateInfo,
+            pNext: ptr::null(),
+            flags: GraphicsPipelineCreateFlags::None,
+            stageCount: 0,
+            pStages: ptr::null,
+            pVertexInputState: ptr::null(),
+            pInputAssemblyState: ptr::null(),
+            pTessellationState: ptr::null(),
+            pViewportState: ptr::null(),
+            pRasterizationState: ptr::null(),
+            pMultisampleState: ptr::null(),
+            pDepthStencilState: ptr::null(),
+            pColorBlendState: ptr::null(),
+            pDynamicState: ptr::null(),
+            layout: ptr::null_mut(),
+            renderPass: ptr::null_mut(),
+            subpass: 0,
+            basePipelineHandle: ptr::null(),
+            basePipelineIndex: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ComputePipelineCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2021,16 +3031,42 @@ pub struct ComputePipelineCreateInfo {
     pub basePipelineIndex: int32_t
 }
 
+impl Default for ComputePipelineCreateInfo {
+    fn default -> ComputePipelineCreateInfo {
+        ComputePipelineCreateInfo {
+            sType: StructureType::ComputePipelineCreateInfo,
+            pNext: ptr::null(),
+            flags: ComputePipelineCreateFlags::None,
+            stage: PiplineShaderStageCreateInfo{..Default::default()},
+            layout: ptr::null_mut(),
+            basePipelineHandle: ptr::null_mut(),
+            basePipelineIndex: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PushConstantRange {
     pub stageFlags: ShaderStageFlags,
     pub offset: uint32_t,
     pub size: uint32_t
 }
 
+impl Default for PushConstantRange {
+    fn default -> PushConstantRange {
+        PushConstantRange {
+            stageFlags: ShaderStageFlags::None,
+            offset: 0,
+            size: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct PipelineLayoutCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2041,13 +3077,28 @@ pub struct PipelineLayoutCreateInfo {
     pub pPushConstantRanges: *const PushConstantRange
 }
 
+impl Default for PipelineLayoutCreateInfo {
+    fn default -> PipelineLayoutCreateInfo {
+        PipelineLayoutCreateInfo {
+            sType: StructureType::PipelineLayoutCreateInfo,
+            pNext: ptr::null(),
+            flags: PipelineLayoutCreateFlags::None,
+            setLayoutCount: 0,
+            pSetLayouts: ptr::null(),
+            pushConstantRangeCount: 0,
+            pPushConstantRanges: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SamplerCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
     pub flags: SamplerCreateFlags,
-    pub magFilter: Filter,
+    pub maxFilter: Filter,
     pub minFilter: Filter,
     pub mipmapMode: SamplerMipmapMode,
     pub addressModeU: SamplerAddressMode,
@@ -2060,12 +3111,38 @@ pub struct SamplerCreateInfo {
     pub compareOp: CompareOp,
     pub minLod: c_float,
     pub maxLod: c_float,
-    pub boarderColor: BorderColor,
-    pub unnomralizedCoordinates: Bool32
+    pub borderColor: BorderColor,
+    pub unnormalizedCoordinates: Bool32
+}
+
+impl Default for SamplerCreateInfo {
+    fn default -> SamplerCreateInfo {
+        SamplerCreateInfo {
+            sType: StructureType::SamplerCreateInfo,
+            pNext: ptr::null(),
+            flags: SamplerCreateFlags::None,
+            maxFilter: Filter::Nearest,
+            minFilter: Filter::Nearest,
+            mipmapMode: SamplerMipmapMode::Nearest,
+            addressModeU: SamplerAddressMode::Repeat,
+            addressModeV: SamplerAddressMode::Repeat,
+            addressModeW: SamplerAddressMode::Repeat,
+            mipLodBias: 0.0,
+            anisotropyEnable: Bool32::False,
+            maxAnisotropy: 0.0,
+            compareEnable: Bool32::False,
+            compareOp: CompareOp::Never,
+            minLod: 0.0,
+            maxLod: 0.0,
+            borderColor: BorderColor::FloatTransparentBlack,
+            unnormlizedCoordinates: Bool32::False
+        }
+    }
 }
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DescriptorSetLayoutBinding {
     pub binding: uint32_t,
     pub descriptorType: DescriptorType,
@@ -2074,8 +3151,21 @@ pub struct DescriptorSetLayoutBinding {
     pub pImmutableSamples: *const Sampler
 }
 
+impl Default for DescriptorSetLayoutBinding {
+    fn default -> DescriptorSetLayoutBinding {
+        DescriptorSetLayoutBinding {
+            binding: 0,
+            descriptorType: DescriptorType::Sampler,
+            descriptorCount: 0,
+            stageFlags: ShaderStageFlags::None,
+            pImmutableSamples: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DescriptorSetLayoutCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2084,15 +3174,38 @@ pub struct DescriptorSetLayoutCreateInfo {
     pub pBindings: *const DescriptorSetLayoutBinding
 }
 
+impl Default for DescriptorSetLayoutCreateInfo {
+    fn default -> DescriptorSetLayoutCreateInfo {
+        DescriptorSetLayoutCreateInfo {
+            sType: StructureType::DescriptorSetLayoutCreateInfo,
+            pNext: ptr::null(),
+            flags: DescriptorSetLayoutCreateFlags::None,
+            bindingCount: 0,
+            pBindings: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DescriptorPoolSize {
     pub descriptorType: DescriptorType,
     pub descriptorCount: uint32_t
 }
 
+impl Default for DescriptorPoolSize {
+    fn default -> DescriptorPoolSize {
+        DescriptorPoolSize {
+            descriptorType: DescriptorType::Sampler,
+            descriptorCount: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DescriptorPoolCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2102,8 +3215,22 @@ pub struct DescriptorPoolCreateInfo {
     pub pPoolSizes: *const DescriptorPoolSize
 }
 
+impl Default for DescriptorPoolCreateInfo {
+    fn default -> DescriptorPoolCreateInfo {
+        DescriptorPoolCreateInfo {
+            sType: StructureType::DescriptorPoolCreateInfo,
+            pNext: ptr::null(),
+            flags: DescriptorPoolCreateFlags::None,
+            maxSets: 0,
+            poolSizeCount: 0,
+            pPoolSizes: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DescriptorSetAllocateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2112,24 +3239,59 @@ pub struct DescriptorSetAllocateInfo {
     pub pSetLayouts: *const DescriptorSetLayout
 }
 
+impl Default for DescriptorSetAllocateInfo {
+    fn default -> DescriptorSetAllocateInfo {
+        DescriptorSetAllocateInfo {
+            sType: StructureType::DescriptorSetAllocateInfo,
+            pNext: ptr::null(),
+            descriptorPool: ptr::null(),
+            descriptorSetCount: 0,
+            pSetLayouts: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DescriptorImageInfo {
     pub sampler: Sampler,
     pub imageView: ImageView,
     pub imageLayout: ImageLayout
 }
 
+impl Default for DescriptorImageInfo {
+    fn default -> DescriptorImageInfo {
+        DescriptorImageInfo {
+            sampler: ptr::null_mut(),
+            imageView: ptr::null_mut(),
+            imageLayout: ImageLayout::Undefined
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DescriptorBufferInfo {
     pub buffer: Buffer,
     pub offset: DeviceSize,
     pub range: DeviceSize
 }
 
+impl Default for DescriptorBufferInfo {
+    fn default -> DescriptorBufferInfo {
+        DescriptorBufferInfo {
+            buffer: ptr::null_mut(),
+            offset: 0,
+            range: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct WriteDescriptorSet {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2143,8 +3305,26 @@ pub struct WriteDescriptorSet {
     pub pTexelBufferView: *const BufferView
 }
 
+impl Default for WriteDescriptorSet {
+    fn default -> WriteDescriptorSet {
+        WriteDescriptorSet {
+            sType: StructureType::WriteDescriptorSet,
+            pNext: ptr::null(),
+            dstSet: ptr::null_mut(),
+            dstBinding: 0,
+            dstArrayElement: 0,
+            descriptorCount: 0,
+            descriptorType: DescriptorType::Sampler,
+            pImageInfo: ptr::null(),
+            pBufferInfo: ptr::null(),
+            pTexelBufferView: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct CopyDescriptorSet {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2157,8 +3337,25 @@ pub struct CopyDescriptorSet {
     pub descriptorCount: uint32_t
 }
 
+impl Default for CopyDescriptorSet {
+    fn default -> CopyDescriptorSet {
+        CopyDescriptorSet {
+            sType: StructureType::CopyDescriptorSet,
+            pNext: ptr::null(),
+            srcSet: ptr::null_mut(),
+            srcBinding: 0,
+            srcArrayElement: 0,
+            dstSet: ptr::null_mut(),
+            dstBinding: 0,
+            dstArrayElement: 0,
+            descriptorCount: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct FramebufferCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2171,8 +3368,25 @@ pub struct FramebufferCreateInfo {
     pub layers: uint32_t
 }
 
+impl Default for FramebufferCreateInfo {
+    fn default -> FramebufferCreateInfo {
+        FramebufferCreateInfo {
+            sType: StructureType::FramebufferCreateInfo,
+            pNext: ptr::null(),
+            flags: FramebufferCreateFlags::None,
+            renderPass: ptr::null_mut(),
+            attachmentCount: 0,
+            pAttachments: ptr::null(),
+            width: 0,
+            height: 0,
+            layers: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct AttachmentDescription {
     pub flags: AttachmentDescriptionFlags,
     pub format: Format,
@@ -2185,15 +3399,42 @@ pub struct AttachmentDescription {
     pub finalLayout: ImageLayout
 }
 
+impl Default for AttachmentDescription {
+    fn default -> AttachmentDescription {
+        AttachmentDescription {
+            flags: AttachmentDescriptionFlags::None,
+            format: Format::None,
+            samples: SampleCountFlags::Count0,
+            loadOp: AttachmentLoadOp::Load,
+            storeOp: AttachmentStoreOp::Store,
+            stencilLoadOp: AttachmentLoadOp::Load,
+            stencilStoreOp: AttachmentStoreOp::Store,
+            initialLayout: ImageLayout::Undefined,
+            finalLayout: ImageLayout::Undefined
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct AttachmentReference {
     pub attachment: uint32_t,
     pub layout: ImageLayout
 }
 
+impl Default for AttachmentReference {
+    fn default -> AttachmentReference {
+        AttachmentReference {
+            attachment: 0,
+            layout: ImageLayout::Undefined
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SubpassDescription {
     pub flags: SubpassDescriptionFlags,
     pub pipelineBindPoint: PipelineBindPoint,
@@ -2207,8 +3448,26 @@ pub struct SubpassDescription {
     pub pPreserveAttachments: *const uint32_t
 }
 
+impl Default for SubpassDescription {
+    fn default -> SubpassDescription {
+        SubpassDescription {
+            flags: SubpassDescriptionFlags::None,
+            pipelineBindPoint: PipelineBindPoint,
+            inputAttachmentCount: 0,
+            pInputAttachments: ptr::null(),
+            colorAttachmentCount: 0,
+            pColorAttachments: ptr::null(),
+            pResolveAttachments: ptr::null(),
+            pDepthStencilAttachment: ptr::null(),
+            preserveAttachmentCount: 0,
+            pPreserveAttachments: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct SubpassDependency {
     pub srcSubpass: uint32_t,
     pub dstSubpass: uint32_t,
@@ -2219,8 +3478,23 @@ pub struct SubpassDependency {
     pub dependencyFlags: DependencyFlags
 }
 
+impl Default for SubpassDependency {
+    fn default -> SubpassDependency {
+        SubpassDependency {
+            srcSubpass: 0,
+            dstSubpass: 0,
+            srcStageMask: PipelineStageFlags::None,
+            dstStageMask: PipelineStageFlags::None,
+            srcAccessMask: AccessFlags::None,
+            dstAccessMask: AccessFlags::None,
+            dependencyFlags: DependencyFlags::None
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct RenderPassCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2233,8 +3507,25 @@ pub struct RenderPassCreateInfo {
     pub pDependencies: *const SubpassDependency
 }
 
+impl Default for RenderPassCreateInfo {
+    fn default -> RenderPassCreateInfo {
+        RenderPassCreateInfo {
+            sType: StructureType::RenderPassCreateInfo,
+            pNext: ptr::null(),
+            flags: RenderPassCreateFlags::None,
+            attachmentCount: 0,
+            pAttachments: ptr::null(),
+            subpassCount: 0,
+            pSubpasses: ptr::null(),
+            dependencyCount: 0,
+            pDependencies: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct CommandPoolCreateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2242,8 +3533,20 @@ pub struct CommandPoolCreateInfo {
     pub queueFamilyIndex: uint32_t
 }
 
+impl Default for CommandPoolCreateInfo {
+    fn default -> CommandPoolCreateInfo {
+        CommandPoolCreateInfo {
+            sType: StructureType::CommandPoolCreateInfo,
+            pNext: ptr::null(),
+            flags: CommandPoolCreateFlags::None,
+            queueFamilyIndex: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct CommandBufferAllocateInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2252,8 +3555,21 @@ pub struct CommandBufferAllocateInfo {
     pub commandBufferCount: uint32_t
 }
 
+impl Default for CommandBufferAllocateInfo {
+    fn default -> CommandBufferAllocateInfo {
+        CommandBufferAllocateInfo {
+            sType: StructureType::CommandBufferAllocateInfo,
+            pNext: ptr::null(),
+            commandPool: ptr::null_mut(),
+            level: CommandBufferLevel::Primary,
+            commandBufferCount: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct CommandBufferInheritanceInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2265,8 +3581,24 @@ pub struct CommandBufferInheritanceInfo {
     pub pipelineStatistics: QueryPipelineStatisticFlags
 }
 
+impl Default for CommandBufferInheritanceInfo {
+    fn default -> CommandBufferInheritanceInfo {
+        CommandBufferInheritanceInfo {
+            sType: StructureType::CommandBufferInheritanceInfo,
+            pNext: ptr::null(),
+            renderPass: ptr::null_mut(),
+            subpass: 0,
+            framebuffer: ptr::null_mut(),
+            occlusionQueryEnable: Bool32::False,
+            queryFlags: QueryControlFlags::None,
+            pipelineStatistics: QueryPipelineStatistics::None
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct CommandBufferBeginInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2274,16 +3606,39 @@ pub struct CommandBufferBeginInfo {
     pub pInheritanceInfo: *const CommandBufferInheritanceInfo
 }
 
+impl Default for CommandBufferBeginInfo {
+    fn default -> CommandBufferBeginInfo {
+        CommandBufferBeginInfo {
+            sType: StructureType::CommandBufferBeginInfo,
+            pNext: ptr::null(),
+            flags: CommandBufferBeginFlags::None,
+            pInheritanceInfo: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct BufferCopy {
     pub srcOffset: DeviceSize,
     pub dstOffset: DeviceSize,
     pub size: DeviceSize
 }
 
+impl Default for BufferCopy {
+    fn default -> BufferCopy {
+        BufferCopy {
+            srcOffset: 0,
+            dstOffset: 0,
+            size: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ImageSubresourceLayers {
     pub aspectMask: ImageAspectFlags,
     pub mipLevel: uint32_t,
@@ -2291,8 +3646,20 @@ pub struct ImageSubresourceLayers {
     pub layerCount: uint32_t
 }
 
+impl Default for ImageSubresourceLayers {
+    fn default -> ImageSubresourceLayers {
+        ImageSubresourceLayers {
+            aspectMask: ImageAspectFlags::None,
+            mipLevel: 0,
+            baseArrayLayer: 0,
+            layerCount: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ImageCopy {
     pub srcSubresource: ImageSubresourceLayers,
     pub srcOffset: Offset3D,
@@ -2301,8 +3668,21 @@ pub struct ImageCopy {
     pub extent: Extent3D
 }
 
+impl Default for ImageCopy {
+    fn default -> ImageCopy {
+        ImageCopy {
+            srcSubresource: ImageSubresourceLayers{..Default::default()},
+            srcOffset: Offset3D{..Default::default()},
+            dstOffset: Offset3D{..Default::default()},
+            dstOffset: Offset3D{..Default::default()},
+            extent: Extent3D{..Default::default()}
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ImageBlit {
     pub srcSubresource: ImageSubresourceLayers,
     pub srcOffsets: [Offset3D; 2],
@@ -2310,8 +3690,20 @@ pub struct ImageBlit {
     pub dstOffsets: [Offset3D; 2]
 }
 
+impl Default for ImageBlit {
+    fn default -> ImageBlit {
+        ImageBlit {
+            srcSubresource: ImageSubresourceLayers{..Default::default()},
+            srcOffset: [Offset3D{..Default::default(); 2],
+            dstSubresource: ImageSubresourceLayers{..Default::default()},
+            dstOffset: [Offset3D{..Default::default(); 2]
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct BufferImageCopy {
     pub bufferOffset: DeviceSize,
     pub bufferRowLength: uint32_t,
@@ -2321,6 +3713,19 @@ pub struct BufferImageCopy {
     pub imageExtent: Extent3D
 }
 
+impl Default for BufferImageCopy {
+    fn default -> BufferImageCopy {
+        BufferImageCopy {
+            bufferOffset: 0,
+            bufferRowLength: 0,
+            bufferImageHeight: 0,
+            imageSubresource: ImageSubresourceLayers{..Default::default()},
+            imageOffset: Offet3D{..Default::default()},
+            imageExtent: Extent3D{..Default::default()}
+        }
+    }
+}
+
 // NOTE: This represents a union. This code should be rewritten when rust adds union support.
 #[allow(non_snake_case)]
 // Can be array of c_float, int32_t, or uint32_t.
@@ -2328,36 +3733,79 @@ pub type ClearColorValue = [uint32_t; 4];
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ClearDepthStencilValue {
     pub depth: c_float,
     pub stencil: uint32_t
 }
 
+impl Default for ClearDepthStencilValue {
+    fn default -> ClearDepthStencilValue {
+        ClearDepthStencilValue {
+            depth: 0.0,
+            stencil: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ClearValue {
     pub color: ClearColorValue,
     pub depthStencil: ClearDepthStencilValue
 }
 
+impl Default for ClearValue {
+    fn default -> ClearValue {
+        ClearValue {
+            color: [0; 4],
+            depthStencil: ClearDepthStencilValue{..Default::default()}
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ClearAttachment {
     pub aspectMask: ImageAspectFlags,
     pub colorAttachment: uint32_t,
     pub clearValue: ClearValue
 }
 
+impl Default for ClearAttachment {
+    fn default -> ClearAttachment {
+        ClearAttachment {
+            aspectMask: ImageAspectFlags::None,
+            colorAttachment: 0,
+            clearValue: ClearValue{..Default::default()}
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ClearRect {
     pub rect: Rect2D,
     pub baseArrayLayer: uint32_t,
     pub layerCount: uint32_t
 }
 
+impl Default for ClearRect {
+    fn default -> ClearRect {
+        ClearRect {
+            rect: Rect2D{..Default::default()},
+            baseArrayLayer: 0,
+            layerCount: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ImageResolve {
     pub srcSubresource: ImageSubresourceLayers,
     pub srcOffset: Offset3D,
@@ -2366,8 +3814,21 @@ pub struct ImageResolve {
     pub extent: Extent3D
 }
 
+impl Default for ImageResolve {
+    fn default -> ImageResolve {
+        ImageResolve {
+            srcSubresource: ImageSubresourceLayers{..Default::default()},
+            srcOffset: Offset3D{..Default::default()},
+            dstSubresource: ImageSubresourceLayers{..Default::default()},
+            dstOffset: Offset3D{..Default::default()},
+            extent: Extent3D{..Default::default()}
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct MemoryBarrier {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2375,22 +3836,51 @@ pub struct MemoryBarrier {
     pub dstAccessMask: AccessFlags,
 }
 
+impl Default for MemoryBarrier {
+    fn default -> MemoryBarrier {
+        MemoryBarrier {
+            sType: StructureType::MemoryBarrier,
+            pNext: ptr::null(),
+            srcAccessMask: AccessFlags::None,
+            dstAccessMask: AccessFlags::None
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct BufferMemoryBarrier {
     pub sType: StructureType,
     pub pNext: *const c_void,
     pub srcAccessMask: AccessFlags,
     pub dstAccessMask: AccessFlags,
     pub srcQueueFamilyIndex: uint32_t,
-    pub dstQueueFamilyINdex: uint32_t,
+    pub dstQueueFamilyIndex: uint32_t,
     pub buffer: Buffer,
     pub offset: DeviceSize,
     pub size: DeviceSize
 }
 
+impl Default for BufferMemoryBarrier {
+    fn default -> BufferMemoryBarrier {
+        BufferMemoryBarrier {
+            sType: StructureType::BufferMemoryBarrier,
+            pNext: ptr::null(),
+            srcAccessMask: AccessFlags::None,
+            dstAccessMask: AccessFlags::None,
+            srcQueueFamilyIndex: 0,
+            dstQueueFamilyIndex: 0,
+            buffer: ptr::null_mut(),
+            offset: 0,
+            size: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct ImageMemoryBarrier {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2404,8 +3894,26 @@ pub struct ImageMemoryBarrier {
     pub subresourceRange: ImageSubresourceRange
 }
 
+impl Default for ImageMemoryBarrier {
+    fn default -> ImageMemoryBarrier {
+        ImageMemoryBarrier {
+            sType: StructureType::ImageMemoryBarrier,
+            pNext: ptr::null(),
+            srcAccessMask: AccessFlags::None,
+            dstAccessMask: AccessFlags::None,
+            oldLayout: ImageLayout::Undefined,
+            newLayout: ImageLayout::Undefined,
+            srcQueueFamilyIndex: 0,
+            dstQueueFamilyIndex: 0,
+            image: ptr::null_mut(),
+            subresourceRange: ImageSubresourceRange{..Default::default()}
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct RenderPassBeginInfo {
     pub sType: StructureType,
     pub pNext: *const c_void,
@@ -2416,16 +3924,42 @@ pub struct RenderPassBeginInfo {
     pub pClearValues: *const ClearValue
 }
 
+impl Default for RenderPassBeginInfo {
+    fn default -> RenderPassBeginInfo {
+        RenderPassBeginInfo {
+            sType: StructureType::RenderPassBeginInfo,
+            pNext: ptr::null(),
+            renderPass: ptr::null_mut(),
+            framebuffer: ptr::null_mut(),
+            renderArea: Rect2D{..Default::default()},
+            clearValueCount: 0,
+            pClearValues: ptr::null()
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DispatchIndirectCommand {
     pub x: uint32_t,
     pub y: uint32_t,
     pub z: uint32_t,
 }
 
+impl Default for DispatchIndirectCommand {
+    fn default -> DispatchIndirectCommand {
+        DispatchIndirectCommand {
+            x: 0,
+            y: 0,
+            z: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DrawIndexedIndirectCommand {
     pub indexCount: uint32_t,
     pub instanceCount: uint32_t,
@@ -2434,118 +3968,142 @@ pub struct DrawIndexedIndirectCommand {
     pub firstInstance: uint32_t
 }
 
+impl Default for DrawIndexedIndirectCommand {
+    fn default -> DrawIndexedIndirectCommand {
+        DrawIndexedIndirectCommand {
+            indexCount: 0,
+            instanceCount: 0,
+            firstIndex: 0,
+            vertexOffset: 0,
+            firstInstance: 0
+        }
+    }
+}
+
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Copy, Clone)]
 pub struct DrawIndirectCommand {
     pub vertexCount: uint32_t,
     pub instanceCount: uint32_t,
-    pub firstVertext: uint32_t,
+    pub firstVertex: uint32_t,
     pub firstInstance: uint32_t
+}
+
+impl Default for DrawIndirectCommand {
+    fn default -> DrawIndirectCommand {
+        DrawIndirectCommand {
+            vertexCount: 0,
+            instanceCount: 0,
+            firstVertex: 0,
+            firstInstance: 0
+        }
+    }
 }
 
 #[link(name = "vulkan-1")]
 #[allow(non_snake_case)]
 #[allow(dead_code)]
 extern "C" {
-    pub fn vkCreateInstance(pCreateInfo: *const InstanceCreateInfo, pAllocator: *const AllocationCallbacks, pInstance: *mut Instance) -> Result;
+    pub fn vkCreateInstance(pCreateInfo: *const InstanceCreateInfo, pAllocator: *const AllocationCallbacks, pInstance: *mut Instance) -> Error;
     pub fn vkDestroyInstance(instance: Instance, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkEnumeratePhysicalDevices(instance: Instance, pPhysicalDeviceCount: *mut uint32_t, pPhysicalDevices: *mut PhysicalDevice) -> Result;
+    pub fn vkEnumeratePhysicalDevices(instance: Instance, pPhysicalDeviceCount: *mut uint32_t, pPhysicalDevices: *mut PhysicalDevice) -> Error;
     pub fn vkGetPhysicalDeviceFeatures(physicalDevice: PhysicalDevice, pFeatures: *mut PhysicalDeviceFeatures) -> c_void;
     pub fn vkGetPhysicalDeviceFormatProperties(physicalDevice: PhysicalDevice, format: Format, pFormatProperties: *mut FormatProperties) -> c_void;
     pub fn vkGetPhysicalDeviceImageFormatProperties(physicalDevice: PhysicalDevice, format: Format, imageType: ImageType, tiling: ImageTiling,
-                                                usage: ImageUsageFlags, flags: ImageCreateFlags, pImageFormatProperties: *mut ImageFormatProperties) -> Result;
+                                                usage: ImageUsageFlags, flags: ImageCreateFlags, pImageFormatProperties: *mut ImageFormatProperties) -> Error;
     pub fn vkGetPhysicalDeviceProperties(physicalDevice: PhysicalDevice, pProperties: *mut PhysicalDeviceProperties) -> c_void;
     pub fn vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice: PhysicalDevice, pQueueFamilyProperyCount: *mut uint32_t, pQueueFamilyProperties: *mut QueueFamilyProperties) -> c_void;
     pub fn vkGetPhysicalDeviceMemoryProperties(physicalDevice: PhysicalDevice, pMemoryProperties: *mut PhysicalDeviceMemoryProperties) -> c_void;
     pub fn vkGetInstanceProcAddr(instance: Instance, pName: *const libc::wchar_t) -> VoidFunction;
     pub fn vkGetDeviceProcAddr(device: Device, pName: *const libc::wchar_t) -> VoidFunction;
-    pub fn vkCreateDevice(physicalDevice: PhysicalDevice, pCreateInfo: *const DeviceCreateInfo, pAllocator: *const AllocationCallbacks, pDevice: *mut Device) -> Result;
+    pub fn vkCreateDevice(physicalDevice: PhysicalDevice, pCreateInfo: *const DeviceCreateInfo, pAllocator: *const AllocationCallbacks, pDevice: *mut Device) -> Error;
     pub fn vkDestroyDevice(device: Device, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkEnumerateInstanceExtensionProperties(pLayerName: *const libc::wchar_t, pPropertyCount: *mut uint32_t, pProperties: *mut ExtensionProperties) -> Result;
-    pub fn vkEnumerateDeviceExtensionProperties(physicalDevice: PhysicalDevice, pLayerName: *const libc::wchar_t, pPropertyCount: *mut uint32_t, pProperties: *mut ExtensionProperties) -> Result;
-    pub fn vkEnumerateInstanceLayerProperties(pPropertyCount: *mut uint32_t, pProperties: *mut LayerProperties) -> Result;
-    pub fn vkEnumerateDeviceLayerProperties(physicalDevice: PhysicalDevice, pPropertyCount: *mut uint32_t, pProperties: *mut LayerProperties) -> Result;
-    pub fn vkGetDeviceQueue(device: Device, queueFamilyIndex: uint32_t, queueIndex: uint32_t, pQueue: *mut Queue) -> Result;
-    pub fn vkQueueSubmit(queue: Queue, submitCount: uint32_t, pSubmits: *const SubmitInfo) -> Result;
-    pub fn vkQueueWaitIdle(queue: Queue) -> Result;
-    pub fn vkDeviceWaitIdle(device: Device) -> Result;
-    pub fn vkAllocateMemory(device: Device, pAllocateInfo: *const MemoryAllocateInfo, pAllocator: *const AllocationCallbacks, pMemory: *mut DeviceMemory) -> Result;
+    pub fn vkEnumerateInstanceExtensionProperties(pLayerName: *const libc::wchar_t, pPropertyCount: *mut uint32_t, pProperties: *mut ExtensionProperties) -> Error;
+    pub fn vkEnumerateDeviceExtensionProperties(physicalDevice: PhysicalDevice, pLayerName: *const libc::wchar_t, pPropertyCount: *mut uint32_t, pProperties: *mut ExtensionProperties) -> Error;
+    pub fn vkEnumerateInstanceLayerProperties(pPropertyCount: *mut uint32_t, pProperties: *mut LayerProperties) -> Error;
+    pub fn vkEnumerateDeviceLayerProperties(physicalDevice: PhysicalDevice, pPropertyCount: *mut uint32_t, pProperties: *mut LayerProperties) -> Error;
+    pub fn vkGetDeviceQueue(device: Device, queueFamilyIndex: uint32_t, queueIndex: uint32_t, pQueue: *mut Queue) -> Error;
+    pub fn vkQueueSubmit(queue: Queue, submitCount: uint32_t, pSubmits: *const SubmitInfo) -> Error;
+    pub fn vkQueueWaitIdle(queue: Queue) -> Error;
+    pub fn vkDeviceWaitIdle(device: Device) -> Error;
+    pub fn vkAllocateMemory(device: Device, pAllocateInfo: *const MemoryAllocateInfo, pAllocator: *const AllocationCallbacks, pMemory: *mut DeviceMemory) -> Error;
     pub fn vkFreeMemory(device: Device, memory: DeviceMemory, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkMapMemory(device: Device, memory: DeviceMemory, offset: DeviceSize, size: DeviceSize, flags: MemoryMapFlags, ppData: *mut *mut c_void) -> Result;
+    pub fn vkMapMemory(device: Device, memory: DeviceMemory, offset: DeviceSize, size: DeviceSize, flags: MemoryMapFlags, ppData: *mut *mut c_void) -> Error;
     pub fn vkUnmapMemory(device: Device, memory: DeviceMemory) -> c_void;
-    pub fn vkFlushMappedMemoryRanges(device: Device, memoryRangeCount: uint32_t, pMemoryRanges: *const MappedMemoryRange) -> Result;
-    pub fn vkInvalidateMappedMemoryRanges(device: Device, memoryRangeCount: uint32_t, pMemoryRanges: *const MappedMemoryRange) -> Result;
-    pub fn vkGetDeviceMemoryCommmitment(device: Device, memory: DeviceMemory, pCommittedMemoryInBytes: *mut DeviceSize) -> c_void;
-    pub fn vkBindBufferMemory(device: Device, buffer: Buffer, memory: DeviceMemory, memoryOffset: DeviceSize) -> Result;
-    pub fn vkBindImageMemory(device: Device, image: Image, memory: DeviceMemory, memoryOffset: DeviceSize) -> Result;
+    pub fn vkFlushMappedMemoryRanges(device: Device, memoryRangeCount: uint32_t, pMemoryRanges: *const MappedMemoryRange) -> Error;
+    pub fn vkInvalidateMappedMemoryRanges(device: Device, memoryRangeCount: uint32_t, pMemoryRanges: *const MappedMemoryRange) -> Error;
+    pub fn vkGetDeviceMemoryCommitment(device: Device, memory: DeviceMemory, pCommittedMemoryInBytes: *mut DeviceSize) -> c_void;
+    pub fn vkBindBufferMemory(device: Device, buffer: Buffer, memory: DeviceMemory, memoryOffset: DeviceSize) -> Error;
+    pub fn vkBindImageMemory(device: Device, image: Image, memory: DeviceMemory, memoryOffset: DeviceSize) -> Error;
     pub fn vkGetBufferMemoryRequirements(device: Device, buffer: Buffer, pMemoryRequirements: *mut MemoryRequirements) -> c_void;
     pub fn vkGetImageMemoryRequirements(device: Device, image: Image, pMemoryRequirements: *mut MemoryRequirements) -> c_void;
-    pub fn vkGetImageSparseMemoryRequirements(device: Device, image: Image, pSparseMemoryRequirementCount: uint32_t, pSparseMemoryRequirements: *mut SparseImageMemoryRequirements) -> c_void;
+    pub fn vkGetImageSparseMemoryRequirements(device: Device, image: Image, pSparseMemoryRequirementCount: *mut uint32_t, pSparseMemoryRequirements: *mut SparseImageMemoryRequirements) -> c_void;
     pub fn vkGetPhysicalDeviceSparseImageFormatProperties(physicalDevice: PhysicalDevice, format: Format, imageType: ImageType, samples: SampleCountFlags,
                                                       usage: ImageUsageFlags, tiling: ImageTiling, pPropertyCount: *mut uint32_t, pProperties: *mut SparseImageFormatProperties) -> c_void;
-    pub fn vkQueueBindSparse(queue: Queue, bindInfoCount: uint32_t, pBindInfo: *const BindSparseInfo, fence: Fence) -> Result;
-    pub fn vkCreateFence(device: Device, pCreateInfo: *const FenceCreateInfo, pAllocator: *const AllocationCallbacks, pFence: *mut Fence) -> Result;
+    pub fn vkQueueBindSparse(queue: Queue, bindInfoCount: uint32_t, pBindInfo: *const BindSparseInfo, fence: Fence) -> Error;
+    pub fn vkCreateFence(device: Device, pCreateInfo: *const FenceCreateInfo, pAllocator: *const AllocationCallbacks, pFence: *mut Fence) -> Error;
     pub fn vkDestroyFence(device: Device, fence: Fence, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkResetFences(device: Device, fenceCount: uint32_t, pFences: *const Fence) -> Result;
-    pub fn vkGetFenceStatus(device: Device, fence: Fence) -> Result;
-    pub fn vkWaitForFences(device: Device, fenceCount: uint32_t, pFences: *const Fence, waitAll: Bool32, timeout: uint64_t) -> Result;
-    pub fn vkCreateSemaphore(device: Device, pCreateInfo: *const SemaphoreCreateInfo, pAllocator: *const AllocationCallbacks, pSemaphore: *mut Semaphore) -> Result;
+    pub fn vkResetFences(device: Device, fenceCount: uint32_t, pFences: *const Fence) -> Error;
+    pub fn vkGetFenceStatus(device: Device, fence: Fence) -> Error;
+    pub fn vkWaitForFences(device: Device, fenceCount: uint32_t, pFences: *const Fence, waitAll: Bool32, timeout: uint64_t) -> Error;
+    pub fn vkCreateSemaphore(device: Device, pCreateInfo: *const SemaphoreCreateInfo, pAllocator: *const AllocationCallbacks, pSemaphore: *mut Semaphore) -> Error;
     pub fn vkDestroySemaphore(device: Device, semaphore: Semaphore, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkCreateEvent(device: Device, pCreateInfo: *const EventCreateInfo, pAllocator: *const AllocationCallbacks, pEvent: *mut Event) -> Result;
+    pub fn vkCreateEvent(device: Device, pCreateInfo: *const EventCreateInfo, pAllocator: *const AllocationCallbacks, pEvent: *mut Event) -> Error;
     pub fn vkDestroyEvent(device: Device, event: Event, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkGetEventStatus(device: Device, event: Event) -> Result;
-    pub fn vkSetEvent(device: Device, event: Event) -> Result;
-    pub fn vkResetEvent(device: Device, event: Event) -> Result;
-    pub fn vkCreateQueryPool(device: Device, pCreateInfo: *const QueryPoolCreateInfo, pAllocator: *const AllocationCallbacks, pQueryPool: *mut QueryPool) -> Result;
+    pub fn vkGetEventStatus(device: Device, event: Event) -> Error;
+    pub fn vkSetEvent(device: Device, event: Event) -> Error;
+    pub fn vkResetEvent(device: Device, event: Event) -> Error;
+    pub fn vkCreateQueryPool(device: Device, pCreateInfo: *const QueryPoolCreateInfo, pAllocator: *const AllocationCallbacks, pQueryPool: *mut QueryPool) -> Error;
     pub fn vkDestroyQueryPool(device: Device, queryPool: QueryPool, pAllocator: *const AllocationCallbacks, pQueryPool: *mut QueryPool) -> c_void;
-    pub fn vkGetQueryPoolResults(device: Device, queryPool: QueryPool, firstQuery: uint32_t, queryCount: uint32_t, dataSize: size_t, pData: *mut c_void,
-                             strid: DeviceSize, flags: QueryResultFlags) -> Result;
-    pub fn vkCreateBuffer(device: Device, pCreateInfo: *const BufferCreateInfo, pAllocator: *const AllocationCallbacks, pBuffer: *mut Buffer) -> Result;
+    pub fn vkGetQueryPoolErrors(device: Device, queryPool: QueryPool, firstQuery: uint32_t, queryCount: uint32_t, dataSize: size_t, pData: *mut c_void,
+                             stride: DeviceSize, flags: QueryErrorFlags) -> Error;
+    pub fn vkCreateBuffer(device: Device, pCreateInfo: *const BufferCreateInfo, pAllocator: *const AllocationCallbacks, pBuffer: *mut Buffer) -> Error;
     pub fn vkDestroyBuffer(device: Device, buffer: Buffer, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkCreateBufferView(device: Device, pCreateInfo: *const BufferViewCreateInfo, pAllocator: *const AllocationCallbacks, pView: *mut BufferView) -> Result;
+    pub fn vkCreateBufferView(device: Device, pCreateInfo: *const BufferViewCreateInfo, pAllocator: *const AllocationCallbacks, pView: *mut BufferView) -> Error;
     pub fn vkDestroyBufferView(device: Device, bufferView: BufferView, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkCreateImage(device: Device, bufferView: BufferView, pAllocator: *const AllocationCallbacks) -> Result;
+    pub fn vkCreateImage(device: Device, pCreateInfo: *const ImageCreateInfo, pAllocator: *const AllocationCallbacks, pImage: *mut Image) -> Error;
     pub fn vkDestroyImage(device: Device, image: Image, pAllocator: *const AllocationCallbacks) -> c_void;
     pub fn vkGetImageSubresourceLayout(device: Device, image: Image, pSubresource: *const ImageSubresource, pLayout: *mut SubresourceLayout) -> c_void;
-    pub fn vkCreateImageView(device: Device, pCreateInfo: *const ImageViewCreateInfo, pAllocator: *const AllocationCallbacks, pView: *mut ImageView) -> Result;
+    pub fn vkCreateImageView(device: Device, pCreateInfo: *const ImageViewCreateInfo, pAllocator: *const AllocationCallbacks, pView: *mut ImageView) -> Error;
     pub fn vkDestroyImageView(device: Device, imageView: ImageView, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkCreateShaderModule(device: Device, shaderModule: ShaderModule, pAllocator: *const AllocationCallbacks) -> Result;
+    pub fn vkCreateShaderModule(device: Device, pCreateInfo: *const ShaderModuleCreateInfo, pAllocator: *const AllocationCallbacks, pShaderModule: *mut ShaderModule) -> Error;
     pub fn vkDestroyShaderModule(device: Device, shaderModule: ShaderModule, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkCreatePipelineCache(device: Device, pCreateInfo: *const PipelineCacheCreateInfo, pAllocator: *const AllocationCallbacks, pPipelineCache: *mut PipelineCache) -> Result;
+    pub fn vkCreatePipelineCache(device: Device, pCreateInfo: *const PipelineCacheCreateInfo, pAllocator: *const AllocationCallbacks, pPipelineCache: *mut PipelineCache) -> Error;
     pub fn vkDestroyPipelineCache(device: Device, pipelineCache: PipelineCache, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkGetPipelinecachedata(device: Device, pipelineCache: PipelineCache, pDataSize: *mut size_t, pData: *mut c_void) -> Result;
-    pub fn vkMergePipelineCaches(device: Device, dstCache: PipelineCache, srcCacheCount: uint32_t, pSrcCaches: *const PipelineCache) -> Result;
+    pub fn vkGetPipelineCacheData(device: Device, pipelineCache: PipelineCache, pDataSize: *mut size_t, pData: *mut c_void) -> Error;
+    pub fn vkMergePipelineCaches(device: Device, dstCache: PipelineCache, srcCacheCount: uint32_t, pSrcCaches: *const PipelineCache) -> Error;
     pub fn vkCreateGraphicsPipelines(device: Device, pipelineCache: PipelineCache, createInfoCount: uint32_t, pCreateInfos: *const GraphicsPipelineCreateInfo,
-                                 pAlloator: *const AllocationCallbacks, pPipelines: *mut Pipeline) -> Result;
+                                 pAllocator: *const AllocationCallbacks, pPipelines: *mut Pipeline) -> Error;
     pub fn vkCreateComputePipelines(device: Device, pipelineCache: PipelineCache, createInfoCount: uint32_t, pCreateInfos: *const ComputePipelineCreateInfo,
-                                pAllocator: *const AllocationCallbacks, pPipelines: *mut Pipeline) -> Result;
+                                pAllocator: *const AllocationCallbacks, pPipelines: *mut Pipeline) -> Error;
     pub fn vkDestroyPipeline(device: Device, pipeline: Pipeline, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkCreatePipelineLayout(device: Device, pCreateInfo: *const PipelineLayoutCreateInfo, pAllocator: *const AllocationCallbacks, pPipelineLayout: *mut PipelineLayout) -> Result;
+    pub fn vkCreatePipelineLayout(device: Device, pCreateInfo: *const PipelineLayoutCreateInfo, pAllocator: *const AllocationCallbacks, pPipelineLayout: *mut PipelineLayout) -> Error;
     pub fn vkDestroyPipelineLayout(device: Device, pipelineLayout: PipelineLayout, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkCreateSampler(device: Device, pCreateInfo: *const SamplerCreateInfo, pAllocator: *const AllocationCallbacks) -> Result;
+    pub fn vkCreateSampler(device: Device, pCreateInfo: *const SamplerCreateInfo, pAllocator: *const AllocationCallbacks) -> Error;
     pub fn vkDestroySampler(device: Device, sampler: Sampler, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkCreateDescriptorSetLayout(device: Device, pCreateInfo: *const DescriptorSetLayoutCreateInfo, pAllocator: *const AllocationCallbacks, pSetLayout: *mut DescriptorSetLayout) -> Result;
+    pub fn vkCreateDescriptorSetLayout(device: Device, pCreateInfo: *const DescriptorSetLayoutCreateInfo, pAllocator: *const AllocationCallbacks, pSetLayout: *mut DescriptorSetLayout) -> Error;
     pub fn vkDestroyDescriptorSetLayout(device: Device, descriptorSetLayout: DescriptorSetLayout, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkCreateDescriptorPool(device: Device, pCreateInfo: *const DescriptorPoolCreateInfo, pAllocator: *const AllocationCallbacks, pDescriptorPool: *mut DescriptorPool) -> Result;
+    pub fn vkCreateDescriptorPool(device: Device, pCreateInfo: *const DescriptorPoolCreateInfo, pAllocator: *const AllocationCallbacks, pDescriptorPool: *mut DescriptorPool) -> Error;
     pub fn vkDestroyDescriptorPool(device: Device, descriptorPool: DescriptorPool, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkResetDescriptorPool(device: Device, descriptorPool: DescriptorPool, flags: DescriptorPoolResetFlags) -> Result;
-    pub fn vkAllocateDescriptorSets(device: Device, pAllocateInfo: *const DescriptorSetAllocateInfo, pDescriptorSets: *mut DescriptorSet) -> Result;
-    pub fn vkFreeDescriptorSets(device: Device, descriptorPool: DescriptorPool, descriptorSetCount: uint32_t, pDescriptorSets: *const DescriptorSet) -> Result;
+    pub fn vkResetDescriptorPool(device: Device, descriptorPool: DescriptorPool, flags: DescriptorPoolResetFlags) -> Error;
+    pub fn vkAllocateDescriptorSets(device: Device, pAllocateInfo: *const DescriptorSetAllocateInfo, pDescriptorSets: *mut DescriptorSet) -> Error;
+    pub fn vkFreeDescriptorSets(device: Device, descriptorPool: DescriptorPool, descriptorSetCount: uint32_t, pDescriptorSets: *const DescriptorSet) -> Error;
     pub fn vkUpdateDescriptorSets(device: Device, descriptorWriteCount: uint32_t, pDescriptorWrites: *const WriteDescriptorSet, descriptorCopyCount: uint32_t,
                               pDescriptorCopies: *const CopyDescriptorSet) -> c_void;
-    pub fn vkCreateFramebuffer(device: Device, pCreateInfo: *const FramebufferCreateInfo, pAllocator: *const AllocationCallbacks, pFramebuffer: *mut Framebuffer) -> Result;
+    pub fn vkCreateFramebuffer(device: Device, pCreateInfo: *const FramebufferCreateInfo, pAllocator: *const AllocationCallbacks, pFramebuffer: *mut Framebuffer) -> Error;
     pub fn vkDestroyFramebuffer(device: Device, framebuffer: Framebuffer, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkCreateRenderPass(device: Device, pCreateInfo: *const RenderPassCreateInfo, pAllocator: *const AllocationCallbacks, pRenderPass: *mut RenderPass) -> Result;
+    pub fn vkCreateRenderPass(device: Device, pCreateInfo: *const RenderPassCreateInfo, pAllocator: *const AllocationCallbacks, pRenderPass: *mut RenderPass) -> Error;
     pub fn vkDestroyRenderPass(device: Device, renderPass: RenderPass, pAllactore: *const AllocationCallbacks) -> c_void;
     pub fn vkGetRenderAreaGranularity(device: Device, renderPass: RenderPass, pGranularity: *mut Extent2D) -> c_void;
-    pub fn vkCreateCommandPool(device: Device, pCreateInfo: *const CommandPoolCreateInfo, pAllocator: *const AllocationCallbacks, pCommandPool: *mut CommandPool) -> Result;
+    pub fn vkCreateCommandPool(device: Device, pCreateInfo: *const CommandPoolCreateInfo, pAllocator: *const AllocationCallbacks, pCommandPool: *mut CommandPool) -> Error;
     pub fn vkDestroyCommandPool(device: Device, commandPool: CommandPool, pAllocator: *const AllocationCallbacks) -> c_void;
-    pub fn vkResetCommandPool(device: Device, commandPool: CommandPool, flags: CommandPoolResetFlags) -> Result;
-    pub fn vkAllocateCommandBuffers(device: Device, pAllocateInfo: *const CommandBufferAllocateInfo, pCommandBuffers: *mut CommandBuffer) -> Result;
+    pub fn vkResetCommandPool(device: Device, commandPool: CommandPool, flags: CommandPoolResetFlags) -> Error;
+    pub fn vkAllocateCommandBuffers(device: Device, pAllocateInfo: *const CommandBufferAllocateInfo, pCommandBuffers: *mut CommandBuffer) -> Error;
     pub fn vkFreeCommandBuffers(device: Device, commandPool: CommandPool, commandBufferCount: uint32_t, pCommandBuffers: *const CommandBuffer) -> c_void;
-    pub fn vkBeginCommandBuffer(commandBuffer: CommandBuffer, pBeginInfo: *const CommandBufferBeginInfo) -> Result;
-    pub fn vkEndCommandBuffer(commandBuffer: CommandBuffer) -> Result;
-    pub fn vkResetCommandBuffer(commandBuffer: CommandBuffer, flags: CommandBufferResetFlags) -> Result;
+    pub fn vkBeginCommandBuffer(commandBuffer: CommandBuffer, pBeginInfo: *const CommandBufferBeginInfo) -> Error;
+    pub fn vkEndCommandBuffer(commandBuffer: CommandBuffer) -> Error;
+    pub fn vkResetCommandBuffer(commandBuffer: CommandBuffer, flags: CommandBufferResetFlags) -> Error;
     pub fn vkCmdBindPipeline(commandBuffer: CommandBuffer, pipelineBindPoint: PipelineBindPoint, pipeline: Pipeline) -> c_void;
     pub fn vkCmdSetViewport(commandBuffer: CommandBuffer, firstViewport: uint32_t, viewportCount: uint32_t, pViewports: *const Viewport) -> c_void;
     pub fn vkCmdSetScissor(commandBuffer: CommandBuffer, firstScissor: uint32_t, scissorCount: uint32_t, pScissors: *const Rect2D) -> c_void;
@@ -2560,7 +4118,7 @@ extern "C" {
                                descriptorSetCount: uint32_t, pDescriptorSets: *const DescriptorSet, dynamicOffsetCount: uint32_t, pDynamicOffsets: *const uint32_t) -> c_void;
     pub fn vkCmdBindIndexBuffer(commandBuffer: CommandBuffer, buffer: Buffer, offset: DeviceSize, indexType: IndexType) -> c_void;
     pub fn vkCmdBindVertexBuffer(commandBuffer: CommandBuffer, firstBinding: uint32_t, bindingCount: uint32_t, pBuffers: *const Buffer, pOffsets: *const DeviceSize) -> c_void;
-    pub fn vkCmdDraw(commandBuffer: CommandBuffer, vertexCount: uint32_t, instanceCount: uint32_t, firstVetext: uint32_t, firstInstance: uint32_t) -> c_void;
+    pub fn vkCmdDraw(commandBuffer: CommandBuffer, vertexCount: uint32_t, instanceCount: uint32_t, firstVertext: uint32_t, firstInstance: uint32_t) -> c_void;
     pub fn vkCmdDrawIndexed(commandBuffer: CommandBuffer, indexCount: uint32_t, instanceCount: uint32_t, firstIndex: uint32_t, vertexOffset: int32_t, firstInstance: uint32_t) -> c_void;
     pub fn vkCmdDrawIndirect(commandBuffer: CommandBuffer, buffer: Buffer, offset: DeviceSize, drawCount: uint32_t, stride: uint32_t) -> c_void;
     pub fn vkCmdDrawIndexedIndirect(commandBuffer: CommandBuffer, buffer: Buffer, offset: DeviceSize, drawCount: uint32_t, stride: uint32_t) -> c_void;
@@ -2596,8 +4154,8 @@ extern "C" {
     pub fn vkCmdEndQuery(commandBuffer: CommandBuffer, queryPool: QueryPool, query: uint32_t) -> c_void;
     pub fn vkCmdResetQueryPool(commandBuffer: CommandBuffer, queryPool: QueryPool, firstQuery: uint32_t, queryCount: uint32_t) -> c_void;
     pub fn vkCmdWriteTimestamp(commandBuffer: CommandBuffer, pipelineStage: PipelineStageFlags, queryPool: QueryPool, query: uint32_t) -> c_void;
-    pub fn vkCmdCopyQueryPoolResults(commandBuffer: CommandBuffer, queryPool: QueryPool, firstQuery: uint32_t, queryCount: uint32_t, dstBuffer: Buffer,
-                                 dstOffset: DeviceSize, stride: DeviceSize, flags: QueryResultFlags) -> c_void;
+    pub fn vkCmdCopyQueryPoolErrors(commandBuffer: CommandBuffer, queryPool: QueryPool, firstQuery: uint32_t, queryCount: uint32_t, dstBuffer: Buffer,
+                                 dstOffset: DeviceSize, stride: DeviceSize, flags: QueryErrorFlags) -> c_void;
     pub fn vkCmdPushConstants(commandBuffer: CommandBuffer, layout: PipelineLayout, stageFlags: ShaderStageFlags, offset: uint32_t, size: uint32_t, pValues: *const c_void) -> c_void;
     pub fn vkCmdBeginRenderPass(commandBuffer: CommandBuffer, pRenderPassBegin: *const RenderPassBeginInfo, contents: SubpassContents) -> c_void;
     pub fn vkCmdNextSubpass(commandBuffer: CommandBuffer, contents: SubpassContents) -> c_void;
